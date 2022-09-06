@@ -1,5 +1,5 @@
 ---
-title: "victoriacutler.github.io"
+title: "Victoria Cutler"
 image: IMG_3429.jpg
 about: 
   template: trestles
