@@ -1,0 +1,4 @@
+---
+title: "all my favorite resources"
+editor: visual
+---

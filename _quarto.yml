@@ -3,13 +3,14 @@ project:
   output-dir: docs
 
 website:
-  title: "victoriacutler.github.io"
+  title: "Victoria Cutler"
   navbar:
     left:
       - href: index.qmd
         text: Home
       - about.qmd
       - hello.qmd
+      - resources.qmd
 
 format:
   html:
