@@ -21,3 +21,5 @@ Here is some more text [@lehmann2007]
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Aspens after the windstorm (digital painting). <a href="https://t.co/jB0385hbG0">pic.twitter.com/jB0385hbG0</a></p>&mdash; Allison HORRORst 👻🎃 (@allison_horst) <a href="https://twitter.com/allison_horst/status/1584354776552116226?ref_src=twsrc%5Etfw">October 24, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 here i am giong to cite my blog post from last year [@cutler2022].
+
+[^1] here is my footnote 1
