@@ -11,6 +11,8 @@ website:
       - about.qmd
       - hello.qmd
       - resources.qmd
+      - href: posts.qmd
+        text: Check out my blog post
 
 format:
   html:

@@ -1,0 +1,7 @@
+# options specified here apply to all qmds in my posts folder
+
+# when we re-render the website, not every blogpost will re-run which is more computationally efficient
+freeze: true 
+
+# enable banner style title blocks:
+title-block-banner: true

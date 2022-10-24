@@ -19,5 +19,19 @@
     "title": "whatever",
     "section": "",
     "text": "hey"
+  },
+  {
+    "objectID": "posts.html",
+    "href": "posts.html",
+    "title": "posts",
+    "section": "",
+    "text": "MEDS\n\n\ntest\n\n\nR\n\n\n\nthis is a description for XXX\n\n\n\nVictoria Cutler\n\n\nOct 24, 2022\n\n\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/2022-10-24-url-title/index.html",
+    "href": "posts/2022-10-24-url-title/index.html",
+    "title": "blog post title XXX",
+    "section": "",
+    "text": "Here is some more text (Lehmann 2007)\n\n\nAspens after the windstorm (digital painting). pic.twitter.com/jB0385hbG0\n\n— Allison HORRORst 👻🎃 ((allison_horst?)) October 24, 2022\n\n\nhere i am giong to cite my blog post from last year (Cutler 2022).\n\n\n\n\nReferences\n\nCutler, Victoria. 2022. “Blog Post Title XXX.” October 24, 2022. https://victoriacutler.github.io/posts/2022-10-24-url-title/.\n\n\nLehmann, Johannes. 2007. “A Handful of Carbon.” Nature 447 (7141): 143–44. https://doi.org/10.1038/447143a.\n\nCitationBibTeX citation:@online{cutler2022,\n  author = {Victoria Cutler},\n  title = {Blog Post Title {XXX}},\n  date = {2022-10-24},\n  url = {https://victoriacutler.github.io/posts/2022-10-24-url-title/},\n  langid = {en}\n}\nFor attribution, please cite this work as:\nVictoria Cutler. 2022. “Blog Post Title XXX.” October 24,\n2022. https://victoriacutler.github.io/posts/2022-10-24-url-title/."
   }
 ]

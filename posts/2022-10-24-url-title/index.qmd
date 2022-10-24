@@ -1,0 +1,23 @@
+---
+title: "blog post title XXX"
+description: "this is a description for XXX"
+author:
+  - name: Victoria Cutler
+    url: https://victoriacutler.github.io # can also add orchid id under here
+    affiliation: MEDS 
+    affiliation-url: https://ucsb-meds.github.io
+date: 2022-10-24
+categories: [MEDS, test, R]
+citation:
+  url: https://victoriacutler.github.io/posts/2022-10-24-url-title/
+bibliography: references.bib
+draft: false # "true" will mean this is a draft post so it wont show up on my site
+---
+
+Hi this is my class example blog post
+
+Here is some more text [@lehmann2007]
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Aspens after the windstorm (digital painting). <a href="https://t.co/jB0385hbG0">pic.twitter.com/jB0385hbG0</a></p>&mdash; Allison HORRORst 👻🎃 (@allison_horst) <a href="https://twitter.com/allison_horst/status/1584354776552116226?ref_src=twsrc%5Etfw">October 24, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+here i am giong to cite my blog post from last year [@cutler2022].
