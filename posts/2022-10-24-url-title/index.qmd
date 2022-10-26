@@ -14,7 +14,7 @@ bibliography: references.bib
 draft: false # "true" will mean this is a draft post so it wont show up on my site
 ---
 
-Hi this is my class example blog post
+Hi this is my class example blog post[^1]
 
 Here is some more text [@lehmann2007]
 
@@ -22,4 +22,4 @@ Here is some more text [@lehmann2007]
 
 here i am giong to cite my blog post from last year [@cutler2022].
 
-[^1] here is my footnote 1
+[^1]: here is my footnote 1
