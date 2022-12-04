@@ -34,7 +34,7 @@ In this post, I aim to explore, nationwide, if income can be a statistically sig
 # Results
 
 ```{r}
-testing
+#testing
 ```
 
 # Discussion
