@@ -9,7 +9,7 @@ author:
 date: 2022-10-24
 categories: [MEDS, test, R]
 citation:
-  url: https://victoriacutler.github.io/posts/2022-10-24-url-title/
+  url: https://victoriacutler.github.io/posts/2022-12-22-solar-equity/
 bibliography: references.bib
 draft: true # "true" will mean this is a draft post so it wont show up on my site
 ---
