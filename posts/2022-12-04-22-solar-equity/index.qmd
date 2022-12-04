@@ -12,7 +12,32 @@ citation:
   url: https://victoriacutler.github.io/posts/2022-12-22-solar-equity/
 bibliography: references.bib
 draft: false # "true" will mean this is a draft post so it wont show up on my site
+format:
+  html:
+    code-fold: true
 ---
+
+# Background
+
+What you may already know of rooftop solar, is that it's a clean and often financially savvy way to supplement energy consumption.
+
+-   add some history about the incentives in california/maybe nation wide
+
+-   talk about the equity concerns with renters and potentially language barriers and how it became a tax on the rich
+
+# Objective
+
+In this post, I aim to explore, nationwide, if income can be a statistically significant predictor in rooftop solar adoption. And, specifically, to explore this relationship in California, where the California Public Utilities Commission is likely to lower financial incentives to rooftop solar adoption.
+
+# Methods
+
+# Results
+
+```{r}
+testing
+```
+
+# Discussion
 
 Hi this is my class example blog post[^1]
 
