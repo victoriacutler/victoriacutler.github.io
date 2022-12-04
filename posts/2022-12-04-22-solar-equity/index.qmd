@@ -1,5 +1,5 @@
 ---
-title: "blog post 2"
+title: "Is Rooftop Solar Equitable?"
 description: "this is a description for XXX"
 author:
   - name: Victoria Cutler
@@ -14,9 +14,7 @@ bibliography: references.bib
 draft: true # "true" will mean this is a draft post so it wont show up on my site
 ---
 
-Hi this is my class example blog post[^1]
-
-[^1]: here is my footnote 1
+Hi this is my class example blog post
 
 Here is some more text [@lehmann2007]
 
