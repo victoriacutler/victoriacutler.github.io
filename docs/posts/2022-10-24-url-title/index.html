@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.0.36">
+<meta name="generator" content="quarto-1.1.189">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -14,10 +14,15 @@
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
@@ -86,9 +91,11 @@ div.csl-indent {
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
-      <a class="navbar-brand" href="../../index.html">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Victoria Cutler</span>
-  </a>
+    </a>
+  </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
@@ -107,7 +114,7 @@ div.csl-indent {
     <a class="nav-link" href="../../resources.html">all my favorite resources</a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../posts.html">Check out my blog post</a>
+    <a class="nav-link" href="../../posts.html">Blogs</a>
   </li>  
 </ul>
               <div id="quarto-search" class="" title="Search"></div>
@@ -178,9 +185,9 @@ div.csl-indent {
 <p>Here is some more text <span class="citation" data-cites="lehmann2007">(<a href="#ref-lehmann2007" role="doc-biblioref">Lehmann 2007</a>)</span></p>
 <blockquote class="twitter-tweet blockquote">
 <p lang="en" dir="ltr">
-Aspens after the windstorm (digital painting). <a href="https://t.co/jB0385hbG0">pic.twitter.com/jB0385hbG0</a>
-</p>
-— Allison HORRORst 👻🎃 (<span class="citation" data-cites="allison_horst">(<a href="#ref-allison_horst" role="doc-biblioref"><strong>allison_horst?</strong></a>)</span>) <a href="https://twitter.com/allison_horst/status/1584354776552116226?ref_src=twsrc%5Etfw">October 24, 2022</a>
+</p><p>Aspens after the windstorm (digital painting). <a href="https://t.co/jB0385hbG0">pic.twitter.com/jB0385hbG0</a></p>
+<p></p>
+<p>— Allison HORRORst 👻🎃 (<span class="citation" data-cites="allison_horst">(<a href="#ref-allison_horst" role="doc-biblioref"><strong>allison_horst?</strong></a>)</span>) <a href="https://twitter.com/allison_horst/status/1584354776552116226?ref_src=twsrc%5Etfw">October 24, 2022</a></p>
 </blockquote>
 <script async="" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 <p>here i am giong to cite my blog post from last year <span class="citation" data-cites="cutler2022">(<a href="#ref-cutler2022" role="doc-biblioref">Cutler 2022</a>)</span>.</p>
@@ -196,13 +203,14 @@ Cutler, Victoria. 2022. <span>“Blog Post Title <span>XXX</span>.”</span> Oct
 <div id="ref-lehmann2007" class="csl-entry" role="doc-biblioentry">
 Lehmann, Johannes. 2007. <span>“A Handful of Carbon.”</span> <em>Nature</em> 447 (7141): 143–44. <a href="https://doi.org/10.1038/447143a">https://doi.org/10.1038/447143a</a>.
 </div>
-</div></section><section class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+</div></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
 <ol>
-<li id="fn1" role="doc-endnote"><p>here is my footnote 1<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>here is my footnote 1<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{cutler2022,
   author = {Victoria Cutler},
+  editor = {},
   title = {Blog Post Title {XXX}},
   date = {2022-10-24},
   url = {https://victoriacutler.github.io/posts/2022-10-24-url-title/},
@@ -281,7 +289,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   for (var i=0; i<noterefs.length; i++) {
     const ref = noterefs[i];
     tippyHover(ref, function() {
-      let href = ref.getAttribute('href');
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
