@@ -15,6 +15,7 @@ draft: false # "true" will mean this is a draft post so it wont show up on my si
 format:
   html:
     code-fold: true
+    code-summary: "show/hide code"
 ---
 
 # Background

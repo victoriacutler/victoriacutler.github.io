@@ -1,0 +1,14 @@
+{
+  "hash": "098ca504879c942ed43b76f8e3bc4aa5",
+  "result": {
+    "markdown": "---\ntitle: \"Is Rooftop Solar Equitable?\"\ndescription: \"this is a description for XXX\"\nauthor:\n  - name: Victoria Cutler\n    url: https://victoriacutler.github.io # can also add orchid id under here\n    affiliation: MEDS \n    affiliation-url: https://ucsb-meds.github.io\ndate: 2022-10-24\ncategories: [MEDS, test, R]\ncitation:\n  url: https://victoriacutler.github.io/posts/2022-12-22-solar-equity/\nbibliography: references.bib\ndraft: false # \"true\" will mean this is a draft post so it wont show up on my site\nformat:\n  html:\n    code-fold: true\n---\n\n\n# Background\n\nWhat you may already know of rooftop solar, is that it's a clean and often financially savvy way to supplement energy consumption.\n\n-   add some history about the incentives in california/maybe nation wide\n\n-   talk about the equity concerns with renters and potentially language barriers and how it became a tax on the rich\n\n# Objective\n\nIn this post, I aim to explore, nationwide, if income can be a statistically significant predictor in rooftop solar adoption. And, specifically, to explore this relationship in California, where the California Public Utilities Commission is likely to lower financial incentives to rooftop solar adoption.\n\n# Methods\n\n# Results\n\n\n::: {.cell}\n\n```{.r .cell-code}\n#testing\n```\n:::\n\n\n# Discussion\n\nHi this is my class example blog post[^1]\n\n[^1]: here is my footnote 1\n\nHere is some more text [@lehmann2007]\n\nhere i am giong to cite my blog post from last year [@cutler2022].\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
