@@ -12,7 +12,7 @@ website:
       - hello.qmd
       - resources.qmd
       - href: posts.qmd
-        text: Check out my blog post
+        text: Blogs
 
 format:
   html:
