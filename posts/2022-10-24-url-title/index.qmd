@@ -11,7 +11,7 @@ categories: [MEDS, test, R]
 citation:
   url: https://victoriacutler.github.io/posts/2022-10-24-url-title/
 bibliography: references.bib
-draft: true # "true" will mean this is a draft post so it wont show up on my site
+draft: false # "true" will mean this is a draft post so it wont show up on my site
 ---
 
 Hi this is my class example blog post[^1]
