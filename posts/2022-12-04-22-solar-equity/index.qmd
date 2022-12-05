@@ -15,20 +15,26 @@ draft: false # "true" will mean this is a draft post so it wont show up on my si
 format:
   html:
     code-fold: true
-    code-summary: "show/hide code"
+    code-summary: "code dropdown"
 ---
 
 # Background
 
-What you may already know of rooftop solar, is that it's a clean and often financially savvy way to supplement energy consumption.
+What you may already know of rooftop solar, is that it is a clean and often financially savvy way to supplement energy consumption. In California, customers can effectively "sell" back the electricity they generate at the same rate they would buy it at. Put differently, utilities are buying electricity at the rate that they sell it at, even while cheaper wholesale rates for solar are on the market. Who "pays" for this more expensive electricity that utilities are buying? The short answer is that customers without rooftop solar, typically lower-income customers, are paying.[^1] On November 10th 2022, the California Public Utilities Commission (CPUC) put forth a proposal that disincentives solar adoption and production: rolling back compensation and decreasing the maximum allowable install capacity (solar panel wattage). In the previous proposal in December 2021, the CPUC suggested tacking on a monthly fee to the bills of homes with rooftop solar, but this clause has since been walked back.
 
--   add some history about the incentives in california/maybe nation wide
+[^1]: https://www.nytimes.com/2022/01/24/business/energy-environment/california-rooftop-solar-utilities.html
 
--   talk about the equity concerns with renters and potentially language barriers and how it became a tax on the rich
+Stakeholders in the energy industry all feel very differently on matter. And the question boils down to: how much should homeowners be paid for their rooftop solar exports and how much should rooftop solar users pay for grid infrastructure?
+
+The current proposal is out for public comment through XX until the CPUC's five members take the proposal to a vote.
+
+-   **add some history about the incentives in california/maybe nation wide**
+
+-   **talk about the equity concerns with renters and potentially language barriers and how it became a tax on the rich**
 
 # Objective
 
-In this post, I aim to explore, nationwide, if income can be a statistically significant predictor in rooftop solar adoption. And, specifically, to explore this relationship in California, where the California Public Utilities Commission is likely to lower financial incentives to rooftop solar adoption.
+In this post, I aim to explore, nationwide, if income can be a statistically significant predictor in rooftop solar adoption, and to what degree income differentials are at (significant difference in income means between solar and non solar customers). And, specifically, to explore this relationship in California, where the California Public Utilities Commission is likely to lower financial incentives to rooftop solar adoption due largely to equity concerns.
 
 # Methods
 
@@ -40,9 +46,9 @@ In this post, I aim to explore, nationwide, if income can be a statistically sig
 
 # Discussion
 
-Hi this is my class example blog post[^1]
+\[\]
 
-[^1]: here is my footnote 1
+Hi this is my class example blog post
 
 Here is some more text [@lehmann2007]
 
