@@ -54,4 +54,4 @@ Hi this is my class example blog post
 
 Here is some more text [@lehmann2007]
 
-here i am giong to cite my blog post from last year [@cutler2022].
+here i am giong to cite my blog post from last year
