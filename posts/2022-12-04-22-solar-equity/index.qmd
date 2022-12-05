@@ -20,11 +20,9 @@ format:
 
 # Background
 
-What you may already know of rooftop solar, is that it is a clean and often financially savvy way to supplement energy consumption. In California, customers can effectively "sell" back the electricity they generate at the same rate they would buy it at. Put differently, utilities are buying electricity at the rate that they sell it at, even while cheaper wholesale rates for solar are on the market. Who "pays" for this more expensive electricity that utilities are buying? The short answer is that customers without rooftop solar, typically lower-income customers, are paying.[^1] On November 10th 2022, the California Public Utilities Commission (CPUC) put forth a proposal that disincentives solar adoption and production: rolling back compensation and decreasing the maximum allowable install capacity (solar panel wattage). In the previous proposal in December 2021, the CPUC suggested tacking on a monthly fee to the bills of homes with rooftop solar, but this clause has since been walked back.[^2]
+What you may already know of rooftop solar, is that it is a clean and often financially savvy way to supplement energy consumption. In California, customers can effectively "sell" back the electricity they generate at the same rate they would buy it at. Put differently, utilities are buying electricity at the rate that they sell it at, even while cheaper wholesale rates for solar are on the market. Who "pays" for this more expensive electricity that utilities are buying? The short answer is that customers without rooftop solar, typically lower-income customers, are paying.[^1] On November 10th 2022, the California Public Utilities Commission (CPUC) put forth a proposal that disincentives solar adoption and production: rolling back compensation and decreasing the maximum allowable install capacity (solar panel wattage). In the previous proposal in December 2021, the CPUC suggested tacking on a monthly fee to the bills of homes with rooftop solar, but this clause has since been walked back \[\@pen2022\]
 
 [^1]: https://www.nytimes.com/2022/01/24/business/energy-environment/california-rooftop-solar-utilities.html
-
-[^2]: https://www.nytimes.com/2022/11/10/business/energy-environment/california-rooftop-solar-net-metering.html
 
 Stakeholders in the energy industry all feel very differently on matter. And the question boils down to: how much should homeowners be paid for their rooftop solar exports and how much should rooftop solar users pay for grid infrastructure?
 
