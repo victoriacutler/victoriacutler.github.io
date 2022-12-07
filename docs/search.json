@@ -32,7 +32,7 @@
     "href": "posts.html",
     "title": "posts",
     "section": "",
-    "text": "MEDS\n\n\ntest\n\n\nR\n\n\n\nthis is a description for XXX\n\n\n\nVictoria Cutler\n\n\nOct 24, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\nMEDS\n\n\ntest\n\n\nR\n\n\n\nthis is a description for XXX\n\n\n\nVictoria Cutler\n\n\nOct 24, 2022\n\n\n\n\n\n\n\n\nNo matching items"
+    "text": "MEDS\n\n\ntest\n\n\nR\n\n\n\nthis is a description for XXX\n\n\n\nVictoria Cutler\n\n\nOct 24, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\nMEDS\n\n\ntest\n\n\nR\n\n\n\nthis is a description for XXX\n\n\n\nVictoria Cutler\n\n\nOct 24, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\nMEDS\n\n\ntest\n\n\nR\n\n\n\nthis is a description for XXX\n\n\n\nVictoria Cutler\n\n\nOct 24, 2022\n\n\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "hello.html",
@@ -40,5 +40,12 @@
     "title": "hello",
     "section": "",
     "text": "hey"
+  },
+  {
+    "objectID": "posts/2022-12-07-AI/index.html",
+    "href": "posts/2022-12-07-AI/index.html",
+    "title": "Ethical AI for Decision Making",
+    "section": "",
+    "text": "The judiciary process is keen on the belief that looking at someone in person helps assess the situation and how to proceed. But humans are filled with bias. And what's more, humans can also be very good at deceiving [Gladwell]. Does this mean, then, that we should be using AI to determine what we should do when it comes to the judgement and placement of people? Or, for that matter, for any decisions that may affect humanity?\nUnfortunately, there are countless examples in which AI algorithms create inequities. [facial recognition technology, policing].\n[but it is possible to make AI unbiases with datasheets for datasets and looking at raw data [raw data as an oxymoron] and it's important for models to not be a black box. AI will be as unjust as the unjustness that goes in (whether that's due to a lack of diversity, unconscious bias, or raw data that is rooted in injustice)\nHi this is my class example blog post(Gladwell 2019)\nHere is some more text (Lehmann 2007)\nhere i am giong to cite my blog post from last year (Cutler 2022).\n\n\n\n\nReferences\n\nCutler, Victoria. 2022. “Blog Post Title XXX.” October 24, 2022. https://victoriacutler.github.io/posts/2022-10-24-url-title/.\n\n\nGladwell, Malcolm. 2019. Talking to Strangers.\n\n\nLehmann, Johannes. 2007. “A Handful of Carbon.” Nature 447 (7141): 143–44. https://doi.org/10.1038/447143a.\n\nCitationBibTeX citation:@online{cutler2022,\n  author = {Victoria Cutler},\n  editor = {},\n  title = {Ethical {AI} for {Decision} {Making}},\n  date = {2022-10-24},\n  url = {https://victoriacutler.github.io/posts/2022-10-24-url-title/},\n  langid = {en}\n}\nFor attribution, please cite this work as:\nVictoria Cutler. 2022. “Ethical AI for Decision Making.”\nOctober 24, 2022. https://victoriacutler.github.io/posts/2022-10-24-url-title/."
   }
 ]
