@@ -20,7 +20,7 @@ The judiciary process is set on the premise that scrutinizing someone in person 
 
 Unfortunately, there are countless examples in which AI algorithms create inequities. While at graduate school, Joy Buolamwini sought to create a mirror that projects various "heroes" on her own face. In doing so, she uncovered something alarming. The mirror wouldn't recognize her own face unless she placed a white mask over it. She then examined the facial recognition technology at Amazon, Google, Microsoft, and IBM and found that error rates within this tech for white men were at less than 1%, yet for black females, this rate was at a whopping 30%. Buolamwini continued to find that this difference in error rates was largely due to the fact that the data set was mostly white men. \[facial recognition technology, policing\].
 
-***\"When we think about transitioning into the world of tech, the same things that are being marginalized and ignored by the conversations we have around racial inequality in the U.S.---skin tone and colorism---are also being marginalized and ignored in the tech world\"*** **- Harvard University Professor Dr Monk**
+***\"**When we think about **transitioning into the world of tech, the same things that are being marginalized and ignored** by the conversations we have around racial inequality in the U.S.**---skin tone and colorism---are also** being **marginalized and ignored in the tech world\"*** **-** Harvard University Professor **Dr. Monk**
 
 This is because raw data is not, in fact, raw, in the sense that it is unbiased.
 
