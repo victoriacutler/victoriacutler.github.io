@@ -7,7 +7,7 @@ author:
     affiliation: MEDS 
     affiliation-url: https://ucsb-meds.github.io
 date: 2022-12-07
-categories: [MEDS, test, R]
+categories: [ETHICS, AI, OPEN SCIENCE]
 citation:
   url: https://victoriacutler.github.io/posts/2022-10-24-url-title/
 bibliography: references.bib
