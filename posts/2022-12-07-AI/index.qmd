@@ -1,0 +1,29 @@
+---
+title: "Ethical AI for Decision Making"
+description: "this is a description for XXX"
+author:
+  - name: Victoria Cutler
+    url: https://victoriacutler.github.io # can also add orchid id under here
+    affiliation: MEDS 
+    affiliation-url: https://ucsb-meds.github.io
+date: 2022-10-24
+categories: [MEDS, test, R]
+citation:
+  url: https://victoriacutler.github.io/posts/2022-10-24-url-title/
+bibliography: references.bib
+draft: false # "true" will mean this is a draft post so it wont show up on my site
+---
+
+In \"Talking To Strangers\" by Malcolm Gladwell, Gladwell remarks that humans are tragically terrible at judging others. Anecdotally, Gladwell references an artificial intelligence (AI) bail sentencing computer program that considers certain facts of the person of deliberation, then returns it\'s assessment on whether or not the person at hand is likely to commit another crime while out on bail. The facts are striking yet perhaps unsurprising. The AI better predicts whether arrested persons are likely to reoffend when out on bail, and thus which people should not be given bail. In other words, the computer outperforms the judge.
+
+The judiciary process is keen on the belief that looking at someone in person helps assess the situation and how to proceed. But humans are filled with bias. And what\'s more, humans can also be very good at deceiving \[Gladwell\]. Does this mean, then, that we should be using AI to determine what we should do when it comes to the judgement and placement of people? Or, for that matter, for any decisions that may affect humanity?
+
+Unfortunately, there are countless examples in which AI algorithms create inequities. \[facial recognition technology, policing\].
+
+\[but it is possible to make AI unbiases with datasheets for datasets and looking at raw data \[raw data as an oxymoron\] and it\'s important for models to not be a black box. AI will be as unjust as the unjustness that goes in (whether that\'s due to a lack of diversity, unconscious bias, or raw data that is rooted in injustice)
+
+Hi this is my class example blog post[@malcolm2019]
+
+Here is some more text [@lehmann2007]
+
+here i am giong to cite my blog post from last year [@cutler2022].
