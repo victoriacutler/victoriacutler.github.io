@@ -12,6 +12,9 @@ citation:
   url: https://victoriacutler.github.io/posts/2022-10-24-url-title/
 bibliography: references.bib
 draft: false # "true" will mean this is a draft post so it wont show up on my site
+output: 
+  html_document:
+    css: custom.css
 ---
 
 In \"Talking To Strangers\" by Malcolm Gladwell, Gladwell remarks that humans are tragically terrible at judging others. Anecdotally, Gladwell references an artificial intelligence (AI) bail sentencing computer program that considers certain facts of the person of deliberation, then returns it\'s assessment on whether or not the person at hand is likely to commit another crime while out on bail. The facts are striking yet perhaps unsurprising. The AI algorithm better predicts whether arrested persons are likely to reoffend when out on bail, and thus which people should not be given bail. In short, the computer outperforms the judge.
