@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Victoria Cutler">
-<meta name="dcterms.date" content="2022-10-24">
+<meta name="dcterms.date" content="2022-12-08">
 <meta name="description" content="this is a description for XXX">
 
 <title>Victoria Cutler - Is Rooftop Solar Equitable?</title>
@@ -196,8 +196,9 @@ div.csl-indent {
         </div>
       </div>
                           <div class="quarto-categories">
-                <div class="quarto-category">MEDS</div>
-                <div class="quarto-category">test</div>
+                <div class="quarto-category">ROOFTOP SOLAR</div>
+                <div class="quarto-category">EQUITY</div>
+                <div class="quarto-category">STATISTICS</div>
                 <div class="quarto-category">R</div>
               </div>
                   </div>
@@ -225,7 +226,7 @@ div.csl-indent {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">October 24, 2022</p>
+        <p class="date">December 8, 2022</p>
       </div>
     </div>
       
@@ -256,33 +257,82 @@ div.csl-indent {
 
 <section id="background" class="level1">
 <h1>Background</h1>
-<p>What you may already know of rooftop solar, is that it’s a clean and often financially savvy way to supplement energy consumption.</p>
-<ul>
-<li><p>add some history about the incentives in california/maybe nation wide</p></li>
-<li><p>talk about the equity concerns with renters and potentially language barriers and how it became a tax on the rich</p></li>
-</ul>
+<p>What you may already know of rooftop solar, is that it is a clean and often financially savvy way to supplement energy consumption. In California, and many other states, for example, customers can effectively “sell” back the electricity they generate at the same rate they would buy it at. Put differently, utilities buy electricity at the rate that they sell it at, even while cheaper wholesale rates for solar are on the market. Who “pays” for this more expensive electricity that utilities are buying? The short answer is that customers without rooftop solar are paying. On November 10th 2022, the California Public Utilities Commission (CPUC) put forth a proposal that disincentivizes solar adoption and production: rolling back compensation and decreasing the maximum allowable install capacity (solar panel wattage). In the previous proposal in December 2021, the CPUC suggested tacking on a monthly fee to the bills of homes with rooftop solar, but this clause has since been walked back <span class="citation" data-cites="penn2022">(<a href="#ref-penn2022" role="doc-biblioref">Penn 2022</a>)</span>.</p>
+<p>Stakeholders across the energy industry all feel very differently on matter. On the one hand: we want to incentivize clean and decentralized energy generation. But on the other hand: we want to ensure that these cost shifts are not burdening those who lack access to solar, primarily low income households.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Essentially, the question boils down to: how much should homeowners be paid for rooftop solar enegy exports and how much should rooftop solar users pay for grid infrastructure?</p>
+<p>The current proposal is out for public comment through XX until the CPUC’s five members take the proposal to a vote.r</p>
 </section>
 <section id="objective" class="level1">
 <h1>Objective</h1>
-<p>In this post, I aim to explore, nationwide, if income can be a statistically significant predictor in rooftop solar adoption. And, specifically, to explore this relationship in California, where the California Public Utilities Commission is likely to lower financial incentives to rooftop solar adoption.</p>
+<p>In this post, I explore, nationwide, if income is a statistically significant predictor in rooftop solar adoption. Furthermore, I explore this relationship in California, where the California Public Utilities Commission is likely to lower financial incentives to rooftop solar adoption due, in large part, to equity concerns. To quantify how stark this contrast is, I also look to see if there is a significant difference in income relative to solar adoption.</p>
 </section>
 <section id="methods" class="level1">
 <h1>Methods</h1>
+<p>Since individual household data regarding income and rooftop solar is unavailable for public use, I use:</p>
+<ol type="1">
+<li>Income data on a census tract basis found [here](https://www.ffiec.gov/censusapp.htm) from the Federal Financial Institutions Examination Council (FFIEC) which maintains income-related census data available for download;</li>
+<li>Rooftop solar data found [here](https://sunroof.withgoogle.com/data-explorer/featured/1/oklahoma-city) from Google Project Sunroof which uses Google overhead imagery, weather station data, and machine learning algorithms to estimate rooftop solar potential of US buildings down to the census tract level; and</li>
+<li>California census tract spatial data found [here] (https://catalog.data.gov/dataset/tiger-line-shapefile-2019-state-california-current-census-tract-state-based) for mapping and visualizing at the census tract level.</li>
+</ol>
+<p>After reading in the data, I cleaned the data, selected only the columns of interest, and created additional columns needed for joining of data and performing analyses. Most notably, I created a variable called pct_qual_with_solar. This variable ranges from 0% to 100% and represents the ratio of the number of buildings with solar with respect to the number of buildings deemed as “qualified” for rooftop solar given the amount of sunlight and roof space. As an example, if census tract A has 10 buildings qualified for rooftop solar, and 5 buildings already have rooftop solar, census tract A would have a pct_qual_with_solar of 50%. I used this variable as a proxy for rooftop solar adoption, since I felt that purely looking at the ratio of of number of buildings with solar with respect to the number of buildings total could lead to bias if income had a relationship with whether or not buildings are qualified for rooftop solar.</p>
+<div class="cell">
+
+</div>
+<p>You can see that</p>
+<div class="cell">
+<details>
+<summary>code dropdown</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Exploration of Distribution/Normality of Solar Data</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># raw solar data distribution for the US</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> solardata, <span class="fu">aes</span>(<span class="at">x =</span> pct_qual_with_solar)) <span class="sc">+</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="co"># essentially no left tail, large right skew, good candidate for a log transformation to get data normal</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+<details>
+<summary>code dropdown</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># raw solar data distribution for CA</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> solardata[solardata<span class="sc">$</span>state_name <span class="sc">==</span> <span class="st">"California"</span>,], <span class="fu">aes</span>(<span class="at">x =</span> pct_qual_with_solar)) <span class="sc">+</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="co"># essentially no left tail, large right skew, good candidate for a log transformation to get data normal</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-2-2.png" class="img-fluid" width="672"></p>
+</div>
+<details>
+<summary>code dropdown</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># the distribution looks more normal when we log it, for the whole US:</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> solardata, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">log</span>(pct_qual_with_solar))) <span class="sc">+</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-2-3.png" class="img-fluid" width="672"></p>
+</div>
+<details>
+<summary>code dropdown</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># the distribution looks more normal when we log it, for california:</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> solardata[solardata<span class="sc">$</span>state_name <span class="sc">==</span> <span class="st">"California"</span>,], <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">log</span>(pct_qual_with_solar))) <span class="sc">+</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-2-4.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ul>
+<li>checked to see if OLS assumptions were met</li>
+</ul>
 </section>
 <section id="results" class="level1">
 <h1>Results</h1>
 <div class="cell">
-<details>
-<summary>code dropdown</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#testing</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
+
 </div>
 </section>
 <section id="discussion" class="level1">
 <h1>Discussion</h1>
-<p>Hi this is my class example blog post<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>Hi this is my class example blog post</p>
 <p>Here is some more text <span class="citation" data-cites="lehmann2007">(<a href="#ref-lehmann2007" role="doc-biblioref">Lehmann 2007</a>)</span></p>
-<p>here i am giong to cite my blog post from last year <span class="citation" data-cites="cutler2022">(<a href="#ref-cutler2022" role="doc-biblioref">Cutler 2022</a>)</span>.</p>
+<p>here i am giong to cite my blog post from last year</p>
 
 
 
@@ -290,28 +340,28 @@ div.csl-indent {
 
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
-<div id="ref-cutler2022" class="csl-entry" role="doc-biblioentry">
-Cutler, Victoria. 2022. <span>“Blog Post Title <span>XXX</span>.”</span> October 24, 2022. <a href="https://victoriacutler.github.io/posts/2022-10-24-url-title/">https://victoriacutler.github.io/posts/2022-10-24-url-title/</a>.
-</div>
 <div id="ref-lehmann2007" class="csl-entry" role="doc-biblioentry">
 Lehmann, Johannes. 2007. <span>“A Handful of Carbon.”</span> <em>Nature</em> 447 (7141): 143–44. <a href="https://doi.org/10.1038/447143a">https://doi.org/10.1038/447143a</a>.
+</div>
+<div id="ref-penn2022" class="csl-entry" role="doc-biblioentry">
+Penn, Ivan. 2022. <span>“California Regulators Propose Cutting Compensation for Rooftop Solar.”</span> November 10, 2022. <a href="https://www.nytimes.com/2022/11/10/business/energy-environment/california-rooftop-solar-net-metering.html">https://www.nytimes.com/2022/11/10/business/energy-environment/california-rooftop-solar-net-metering.html</a>.
 </div>
 </div></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
 <ol>
-<li id="fn1"><p>here is my footnote 1<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>Low income households often lack access to solar since (1) financing options are often needed to cover the high upfront cost of solar (2) if English isn’t a first language, or many jobs ar , there liisn’t enough time to figure out<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{cutler2022,
   author = {Victoria Cutler},
   editor = {},
   title = {Is {Rooftop} {Solar} {Equitable?}},
-  date = {2022-10-24},
+  date = {2022-12-08},
   url = {https://victoriacutler.github.io/posts/2022-12-22-solar-equity/},
   langid = {en}
 }
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-cutler2022" class="csl-entry quarto-appendix-citeas" role="doc-biblioentry">
 Victoria Cutler. 2022. <span>“Is Rooftop Solar Equitable?”</span>
-October 24, 2022. <a href="https://victoriacutler.github.io/posts/2022-12-22-solar-equity/">https://victoriacutler.github.io/posts/2022-12-22-solar-equity/</a>.
+December 8, 2022. <a href="https://victoriacutler.github.io/posts/2022-12-22-solar-equity/">https://victoriacutler.github.io/posts/2022-12-22-solar-equity/</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
