@@ -54,6 +54,8 @@ library(spData)
 library(tmap)
 library(broom)
 library(sf)
+library(xtable)
+library(knitr)
 
 # define root directory
 rootdir <- "/Users/victoriacutler/Documents/MEDS/Courses/EDS222/finalproject"
@@ -131,12 +133,14 @@ ggplot(data = mod_ca, aes(sample = res)) +
 Hypothesis testing:
 
 ```{r}
-s
+
 ```
+
+Map of California:
 
 # Discussion
 
--   talk more about the implications ofthe results
+-   talk more about the implications of the results
 
 -   dd for further study
 

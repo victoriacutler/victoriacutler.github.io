@@ -8,7 +8,7 @@
 
 <meta name="author" content="Victoria Cutler">
 <meta name="dcterms.date" content="2022-12-08">
-<meta name="description" content="this is a description for XXX">
+<meta name="description" content="test">
 
 <title>Victoria Cutler - Is Rooftop Solar Equitable?</title>
 <style>
@@ -192,7 +192,7 @@ div.csl-indent {
       <h1 class="title">Is Rooftop Solar Equitable?</h1>
                   <div>
         <div class="description">
-          this is a description for XXX
+          test
         </div>
       </div>
                           <div class="quarto-categories">
@@ -246,6 +246,7 @@ div.csl-indent {
   <li><a href="#methods" id="toc-methods" class="nav-link" data-scroll-target="#methods">Methods</a></li>
   <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a></li>
   <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion">Discussion</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   </ul>
 </nav>
     </div>
@@ -263,7 +264,7 @@ div.csl-indent {
 </section>
 <section id="objective" class="level1">
 <h1>Objective</h1>
-<p>In this post, I explore, nationwide, if income is a statistically significant predictor in rooftop solar adoption. Furthermore, I explore this relationship in California, where the California Public Utilities Commission is likely to lower financial incentives to rooftop solar adoption due, in large part, to equity concerns. To quantify how stark this contrast is, I also look to see if there is a significant difference in income relative to solar adoption.</p>
+<p>In this post, I explore, if income is a statistically significant predictor in rooftop solar adoption in California. To quantify how stark this contrast is, I also look to see if there is a significant difference in income relative to solar adoption.</p>
 </section>
 <section id="methods" class="level1">
 <h1>Methods</h1>
@@ -273,66 +274,139 @@ div.csl-indent {
 <li>Rooftop solar data found [here](https://sunroof.withgoogle.com/data-explorer/featured/1/oklahoma-city) from Google Project Sunroof which uses Google overhead imagery, weather station data, and machine learning algorithms to estimate rooftop solar potential of US buildings down to the census tract level; and</li>
 <li>California census tract spatial data found [here] (https://catalog.data.gov/dataset/tiger-line-shapefile-2019-state-california-current-census-tract-state-based) for mapping and visualizing at the census tract level.</li>
 </ol>
-<p>After reading in the data, I cleaned the data, selected only the columns of interest, and created additional columns needed for joining of data and performing analyses. Most notably, I created a variable called pct_qual_with_solar. This variable ranges from 0% to 100% and represents the ratio of the number of buildings with solar with respect to the number of buildings deemed as “qualified” for rooftop solar given the amount of sunlight and roof space. As an example, if census tract A has 10 buildings qualified for rooftop solar, and 5 buildings already have rooftop solar, census tract A would have a pct_qual_with_solar of 50%. I used this variable as a proxy for rooftop solar adoption, since I felt that purely looking at the ratio of of number of buildings with solar with respect to the number of buildings total could lead to bias if income had a relationship with whether or not buildings are qualified for rooftop solar.</p>
+<p>After reading in the data, I cleaned the data, selected only the columns of interest, and created additional columns needed for joining of data and performing analyses. Most notably, I created a variable called <code>pct_qual_with_solar</code>. This variable ranges from 0% to 100% and represents the ratio of number of buildings with solar with respect to the number of buildings deemed as “qualified” for rooftop solar<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. As an example, if census tract A has 10 buildings qualified for rooftop solar, and 5 buildings in census tract A already have rooftop solar, this census tract would have a <code>pct_qual_with_solar</code> of 50%. I used this variable as a proxy for rooftop solar adoption, since I felt that purely looking at the ratio of of number of buildings with solar with respect to the number of buildings total could lead to bias if income is correlated with locations with census tracts of low rooftop solar qualifications. I refer to this variable as “solar saturation”.</p>
 <div class="cell">
 
 </div>
-<p>You can see that</p>
+<p>I first looked at the distribution of the solar saturation for the whole US and California. We see right skew which hints that these data may be a good candidate for log-normalization. However, after taking the log of my data and performing an Ordinary Least Squares (OSL) regression on the log-normalized data, I noticed that the assumptions for OLS were not better met by much. Additionally, due to the large amount of data we have at 0% solar saturation, to perform a log-normalized OLS regression would require either data manipulation, or removing much of the data.</p>
 <div class="cell">
 <details>
 <summary>code dropdown</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Exploration of Distribution/Normality of Solar Data</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># raw solar data distribution for the US</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> solardata, <span class="fu">aes</span>(<span class="at">x =</span> pct_qual_with_solar)) <span class="sc">+</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># raw solar data distribution for California</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> cleandata, <span class="fu">aes</span>(<span class="at">x =</span> pct_qual_with_solar)) <span class="sc">+</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="co"># essentially no left tail, large right skew, good candidate for a log transformation to get data normal</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
 </div>
-<details>
-<summary>code dropdown</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># raw solar data distribution for CA</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> solardata[solardata<span class="sc">$</span>state_name <span class="sc">==</span> <span class="st">"California"</span>,], <span class="fu">aes</span>(<span class="at">x =</span> pct_qual_with_solar)) <span class="sc">+</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="co"># essentially no left tail, large right skew, good candidate for a log transformation to get data normal</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-2-2.png" class="img-fluid" width="672"></p>
 </div>
-<details>
-<summary>code dropdown</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># the distribution looks more normal when we log it, for the whole US:</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> solardata, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">log</span>(pct_qual_with_solar))) <span class="sc">+</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-2-3.png" class="img-fluid" width="672"></p>
-</div>
-<details>
-<summary>code dropdown</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># the distribution looks more normal when we log it, for california:</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> solardata[solardata<span class="sc">$</span>state_name <span class="sc">==</span> <span class="st">"California"</span>,], <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">log</span>(pct_qual_with_solar))) <span class="sc">+</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-2-4.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<ul>
-<li>checked to see if OLS assumptions were met</li>
-</ul>
 </section>
 <section id="results" class="level1">
 <h1>Results</h1>
+<p>Regression: I chose to use median census tract income over income status because it explained the variation better.</p>
+<div class="cell">
+<details>
+<summary>code dropdown</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>mod_ca <span class="ot">&lt;-</span> <span class="fu">lm</span>(pct_qual_with_solar <span class="sc">~</span> tract_med_family_income <span class="sc">+</span> yearly_sunlight_kwh_median, <span class="at">data =</span> cleandata)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod_ca)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = pct_qual_with_solar ~ tract_med_family_income + 
+    yearly_sunlight_kwh_median, data = cleandata)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-18.6356  -1.5504  -0.5476   1.0429  27.0392 
+
+Coefficients:
+                             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)                -6.757e-01  8.637e-02  -7.823 6.00e-15 ***
+tract_med_family_income     3.842e-05  7.547e-07  50.909  &lt; 2e-16 ***
+yearly_sunlight_kwh_median  8.022e-06  1.292e-06   6.211 5.59e-10 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 2.943 on 6376 degrees of freedom
+Multiple R-squared:  0.2927,    Adjusted R-squared:  0.2925 
+F-statistic:  1319 on 2 and 6376 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<details>
+<summary>code dropdown</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>mod_ca  <span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xtable</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 34%">
+<col style="width: 14%">
+<col style="width: 14%">
+<col style="width: 12%">
+<col style="width: 24%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">Estimate</th>
+<th style="text-align: right;">Std. Error</th>
+<th style="text-align: right;">t value</th>
+<th style="text-align: right;">Pr(&gt;|t|)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-0.6756526</td>
+<td style="text-align: right;">0.0863672</td>
+<td style="text-align: right;">-7.823025</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">tract_med_family_income</td>
+<td style="text-align: right;">0.0000384</td>
+<td style="text-align: right;">0.0000008</td>
+<td style="text-align: right;">50.908708</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">yearly_sunlight_kwh_median</td>
+<td style="text-align: right;">0.0000080</td>
+<td style="text-align: right;">0.0000013</td>
+<td style="text-align: right;">6.211287</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<details>
+<summary>code dropdown</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">resid</span>(mod_ca)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> mod_ca, <span class="fu">aes</span>(<span class="at">sample =</span> res)) <span class="sc">+</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_qq</span>() <span class="sc">+</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_qq_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ul>
+<li>talk more about the facts of the results</li>
+</ul>
+<p>Hypothesis testing:</p>
 <div class="cell">
 
 </div>
+<p>Map of California:</p>
 </section>
 <section id="discussion" class="level1">
 <h1>Discussion</h1>
-<p>Hi this is my class example blog post</p>
-<p>Here is some more text <span class="citation" data-cites="lehmann2007">(<a href="#ref-lehmann2007" role="doc-biblioref">Lehmann 2007</a>)</span></p>
-<p>here i am giong to cite my blog post from last year</p>
+<ul>
+<li><p>talk more about the implications of the results</p></li>
+<li><p>dd for further study</p></li>
+<li><p>add biases etc like how i have non residential buildings in here and if those are correlated with something</p></li>
+<li><p>the fact that tract income &gt; income class suggests that level of income matters more since the price of solar likely doesn’t vary much census tract to census tract</p></li>
+</ul>
+</section>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+<p>Furthermore, I explore this relationship in California, where the California Public Utilities Commission is likely to lower financial incentives to rooftop solar adoption due, in large part, to equity concerns.</p>
 
 
 
@@ -340,9 +414,6 @@ div.csl-indent {
 
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
-<div id="ref-lehmann2007" class="csl-entry" role="doc-biblioentry">
-Lehmann, Johannes. 2007. <span>“A Handful of Carbon.”</span> <em>Nature</em> 447 (7141): 143–44. <a href="https://doi.org/10.1038/447143a">https://doi.org/10.1038/447143a</a>.
-</div>
 <div id="ref-penn2022" class="csl-entry" role="doc-biblioentry">
 Penn, Ivan. 2022. <span>“California Regulators Propose Cutting Compensation for Rooftop Solar.”</span> November 10, 2022. <a href="https://www.nytimes.com/2022/11/10/business/energy-environment/california-rooftop-solar-net-metering.html">https://www.nytimes.com/2022/11/10/business/energy-environment/california-rooftop-solar-net-metering.html</a>.
 </div>
@@ -350,6 +421,7 @@ Penn, Ivan. 2022. <span>“California Regulators Propose Cutting Compensation fo
 
 <ol>
 <li id="fn1"><p>Low income households often lack access to solar since (1) financing options are often needed to cover the high upfront cost of solar (2) if English isn’t a first language, or many jobs ar , there liisn’t enough time to figure out<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Per Google Project Sunroof criteria which considers amount of sunlight and roof space.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{cutler2022,
   author = {Victoria Cutler},
