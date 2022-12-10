@@ -6,7 +6,7 @@ author:
     url: https://victoriacutler.github.io # can also add orchid id under here
     affiliation: MEDS 
     affiliation-url: https://ucsb-meds.github.io
-date: 2022-12-08
+date: 2022-12-04
 categories: [ROOFTOP SOLAR, EQUITY, STATISTICS, R]
 citation:
   url: https://victoriacutler.github.io/posts/2022-12-22-solar-equity/
