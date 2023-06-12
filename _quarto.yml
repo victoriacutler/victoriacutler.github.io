@@ -3,16 +3,14 @@ project:
   output-dir: docs
 
 website:
-  title: "Victoria Cutler"
+  #title: "victoria cutler"
   navbar:
     right:
       - href: index.qmd
-        text: Home
+        text: home
       - about.qmd
-      - hello.qmd
-      - resources.qmd
       - href: posts.qmd
-        text: Blogs
+        text: portfolio
       - href: resume/vc_resume.pdf
         text: resume
       - icon: github
@@ -24,11 +22,21 @@ website:
       - icon: envelope
         href: mailto:victoriacutler123@gmail.com
 
+# format:
+#   html:
+#     theme: 
+#       - mystyles.scss
+#     toc: true
+# 
+# editor: visual
+
 format:
   html:
+    page-layout: full
+    sidebar: false
     theme: 
-      - mystyles.scss
+      - green_theme.scss
+    # css: styles.css
+    mainfont: Nunito
     toc: true
-
-editor: visual
 
