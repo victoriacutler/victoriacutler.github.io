@@ -3,7 +3,8 @@ project:
   output-dir: docs
 
 website:
-  title: "victoria cutler"
+  site-url: https://victoriacutler.github.io/
+  #title: "victoria cutler"
   navbar:
     right:
       - href: index.qmd
