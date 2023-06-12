@@ -11,7 +11,7 @@ categories: [ETHICS, AI, OPEN SCIENCE]
 citation:
   url: https://victoriacutler.github.io/posts/2022-10-24-url-title/
 bibliography: references.bib
-image: "preview-image.png"
+image: "preview-image3.png"
 draft: false # "true" will mean this is a draft post so it wont show up on my site
 ---
 

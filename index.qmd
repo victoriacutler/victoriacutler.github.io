@@ -3,23 +3,37 @@ title: "Victoria Cutler"
 image: IMG_3429.jpg
 about: 
   template: trestles
-  image-shape: rounded
-  image-width: 15em
+  image-shape: round
+  image-width: 14em
   links:
     - text: LinkedIn
       href: https://www.linkedin.com/in/victoria-cutler/
     - text: Twitter
       href: https://twitter.com/VictoriaECutler
     - text: GitHub
-      href: hhttps://github.com/victoriacutler
+      href: https://github.com/victoriacutler
     - text: Email
       href: mailto:victoriacutler123@gmail.com
 ---
 
-## Hi There!
+### about me
 
-# Education
+Hi 👋🏼 I'm Victoria and I've recently graduated from the Bren School at UCSB with a Masters in Environmental Data Science. I'm passionate about environmental issues and I love to problem solve with code. In my free time I love to go camping/backpacking, attend game nights, and find new restaurants via yelp. Feel free to check out my portfolio, resume, or really whatever!
 
-### Experience
+### education
 
-My website!
+Masters in Environmental Data Science \| 2023 \| Bren School at UCSB
+
+BA in Environmental Science \| 2018 \| Colorado College
+
+### experience
+
+Pacific Gas & Electric Company (PG&E) \| 2018 - 2022
+
+-   Senior Strategic Analyst (Energy Efficiency)
+
+-   Program Manager (Community Solar)
+
+-   Data Analyst (Emergency Operation Center - Public Safety Power Shutoffs)
+
+-   Rotational Analyst (Energy Efficiency, Demand Response)

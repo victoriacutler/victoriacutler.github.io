@@ -1,5 +1,5 @@
 ---
-title: "portfolio"
+title: "blog & portfolio"
 listing:
   type: grid
   contents: posts

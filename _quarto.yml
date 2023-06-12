@@ -9,9 +9,9 @@ website:
     right:
       - href: index.qmd
         text: home
-      - about.qmd
+      #- about.qmd
       - href: posts.qmd
-        text: portfolio
+        text: blog & portfolio
       - href: resume/vc_resume.pdf
         text: resume
       - icon: github
