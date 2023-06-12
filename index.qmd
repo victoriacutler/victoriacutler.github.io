@@ -11,9 +11,9 @@ about:
     - text: Twitter
       href: https://twitter.com/VictoriaECutler
     - text: GitHub
-      href: https://github.com/samanthacsik
+      href: hhttps://github.com/victoriacutler
     - text: Email
-      href: mailto:victoriacutler@ucsb.edu
+      href: mailto:victoriacutler123@gmail.com
 ---
 
 ## Hi There!

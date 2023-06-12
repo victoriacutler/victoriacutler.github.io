@@ -5,7 +5,7 @@ project:
 website:
   title: "Victoria Cutler"
   navbar:
-    left:
+    right:
       - href: index.qmd
         text: Home
       - about.qmd
@@ -13,11 +13,21 @@ website:
       - resources.qmd
       - href: posts.qmd
         text: Blogs
+      - href: resume/vc_resume.pdf
+        text: resume
+      - icon: github
+        href: https://github.com/victoriacutler
+      - icon: twitter
+        href: https://twitter.com/VictoriaECutler
+      - icon: linkedin
+        href: https://www.linkedin.com/in/victoria-cutler/
+      - icon: envelope
+        href: mailto:victoriacutler123@gmail.com
 
 format:
   html:
-    theme: cosmo
-    css: styles.css
+    theme: 
+      - mystyles.scss
     toc: true
 
 editor: visual
