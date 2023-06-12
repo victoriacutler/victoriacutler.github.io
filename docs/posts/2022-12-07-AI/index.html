@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.189">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Victoria Cutler">
+<meta name="dcterms.date" content="2022-12-07">
+<meta name="description" content="How can we construct AI without unintended consequences?">
+
+<title>Ethical AI for Just Decision Making</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">home</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">about</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../posts.html">portfolio</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../resume/vc_resume.pdf">resume</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/victoriacutler"><i class="bi bi-github" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/VictoriaECutler"><i class="bi bi-twitter" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/victoria-cutler/"><i class="bi bi-linkedin" role="img">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="mailto:victoriacutler123@gmail.com"><i class="bi bi-envelope" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-page">
+      <h1 class="title">Ethical AI for Just Decision Making</h1>
+                  <div>
+        <div class="description">
+          How can we construct AI without unintended consequences?
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">ETHICS</div>
+                <div class="quarto-category">AI</div>
+                <div class="quarto-category">OPEN SCIENCE</div>
+              </div>
+                  </div>
+  </div>
+    
+  <div class="quarto-title-meta-author">
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-heading">Affiliation</div>
+    
+      <div class="quarto-title-meta-contents">
+      <a href="https://victoriacutler.github.io">Victoria Cutler</a> 
+    </div>
+      <div class="quarto-title-meta-contents">
+          <p class="affiliation">
+              <a href="https://ucsb-meds.github.io">
+              MEDS
+              </a>
+            </p>
+        </div>
+      </div>
+
+  <div class="quarto-title-meta">
+
+        
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">December 7, 2022</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block column-page" id="quarto-document-content">
+
+
+
+
+<p>In “Talking To Strangers” by Malcolm Gladwell, Gladwell remarks that humans are consistently and predictably terrible at judging others. To illustrate, Gladwell references an artificial intelligence (AI) bail sentencing computer program that considers certain criteria of the person of deliberation, then returns it’s assessment on whether or not the person at hand is likely to commit another crime while out on bail. The facts are striking yet perhaps unsurprising. The AI algorithm better predicts whether arrested persons are likely to re-offend when out on bail, and thus which people should not be given bail. In short, the computer outperforms the sentencing judge.</p>
+<p>The judiciary process is set on top of the premise that in-person-judgement in the courtroom helps in accurate decision making. But humans are filled with bias. And what’s more, humans can also be very good at deceiving <span class="citation" data-cites="gladwell2019">(<a href="#ref-gladwell2019" role="doc-biblioref">Gladwell 2019</a>)</span>. Does this mean, then, that we should be using AI to determine what we should do when it comes to the judgement and placement of people? Or, for that matter, for any decisions that may affect humanity?</p>
+<p>Unfortunately, there are countless examples in which AI algorithms create inequities. For one, while at graduate school, Joy Buolamwini sought to create a mirror that projects various “heroes” on her own face. In doing so, she uncovered something alarming. The mirror wouldn’t recognize her own face unless she placed a white mask over it. She then examined the facial recognition technology at Amazon, Google, Microsoft, and IBM and found that error rates within this tech for white men were at less than 1%, yet for black and brown females, this error rate was at a whopping 30%. Buolamwini continued her studies to find that this difference in error rates was largely due to the fact that the data set of imagery was mostly white men <span class="citation" data-cites="shacknai2022">(<a href="#ref-shacknai2022" role="doc-biblioref">Shacknai 2022</a>)</span>. And this is no shock given that performing a quick Google image search of “men”, we largely see <em>white</em> men.</p>
+<p><em><strong>“When we think about transitioning into the world of tech, the same things that are being marginalized and ignored by the conversations we have around racial inequality in the U.S.—skin tone and colorism—are also being marginalized and ignored in the tech world</strong>”</em> <strong>- Harvard University Professor</strong> <strong>Dr.&nbsp;Monk</strong><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>Similarly, predictive policing<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> makes use of past policing data to predict which neighborhoods to police next. While this methodology may be seemingly “unbiased” since it circumvents biased people in the decision making process, the reality is just the opposite. This is due to the fact that policing data is systemically biased and racist. As a result, predictive policing tools can create vicious feedback loops in which neighborhoods that were in the past more frequently policed due to racism and biases are now more policed, which inevitably leads to more arrests/infractions, and therefore more data for predictive policing models to point even more to those very same neighborhoods <span class="citation" data-cites="lum2016">(<a href="#ref-lum2016" role="doc-biblioref">Lum and Isaac 2016</a>)</span>.</p>
+<p>This is because “raw data” is not, in fact, raw, in the sense that it is unbiased. It is grounded in the inequities present at the time. For that reason, if we are to use AI to help us with decision making, it is imperative that we re-contextualize our data to recognize the biases at play to help that our model-inputs are no longer biased <span class="citation" data-cites="gitelman2013">(<a href="#ref-gitelman2013" role="doc-biblioref">Gitelman 2013</a>)</span>.</p>
+<p>But how can we ensure our raw data is re-contextualized and bias-free? One possible mitigation strategy is to utilize datasheets for datasets for any data used in our models <span class="citation" data-cites="gebru2018">(<a href="#ref-gebru2018" role="doc-biblioref">Gebru et al. 2018</a>)</span>. In “Datasheets for Datasets” by Timnit Gebru, Gebru brings to light how if we provide a plethora of information about every dataset, we can help avoid unintended consequences in the use of that data. “Datasheets for Datasets” provides a plethora of potential provocative questions to provide about our datasets, such as:</p>
+<ul>
+<li><p>“For what purpose was the dataset created?”</p></li>
+<li><p>“Who funded the creation of the dataset?”</p></li>
+<li><p>“Does the dataset contain all possible instances or is it a sample (not necessarily random of instances) from a larger set?”</p></li>
+<li><p>“Is any information missing from individual instances?”</p></li>
+<li><p>“Who was involved in the data collection process (e.g., students, crowdworkers, contractors) and how were they compensated (e.g., how much were crowdworkers paid)?”</p></li>
+</ul>
+<p>When we have datasheets comprehensively describing our data, we are able to more accurately identify biases for AI computer model building.</p>
+<p>And to that point, our AI models themselves should <em>also</em> come along with datasheets for increased transparency, better model comprehension, and ultimately, better model quality checks. These more transparent AI models are often referred to as “white box” models, which are so transparent such that any outside observer can clearly see how automated AI models arrive at the decision. In this way, it would be much easier to see if the model is making recommendations rooted in bias. “Black box” models do not have this sort of transparency and thus it is nearly impossible to see if the model is using incorrect or unjust assumptions as part of it’s methodology <span class="citation" data-cites="mcnally">(<a href="#ref-mcnally" role="doc-biblioref">McNally, n.d.</a>)</span>. When we think of how AI models have the ability to morph as the data that the model is continuously trained on comes in, white box models have even more weight. This is because the method that a model was once using and was once understood, may be drastically different from the method used today. For this reason, it is greatly important to perform consistent checks on model assumptions.</p>
+<p>So - back to the original question: should AI be used for decision making?</p>
+<p>All in all, AI will be as unjust as the “unjustness” that goes in. But with correct input data and model checks and balances, it is certainly possible to create AI algorithms that are at least less biased than the average human. Algorithms may never be perfect, but that is exactly why it is so important for our models and input data to be transparent and open for diverse sets of stakeholders to scrutinize.</p>
+
+
+
+
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-gebru2018" class="csl-entry" role="doc-biblioentry">
+Gebru, Timnit, Jamie Morgenstern, Briana Vecchione, Jennifer Wortman Vaughan, Hanna Wallach, Hal Daumé, and Kate Crawford. 2018. <span>“Datasheets for Datasets.”</span> <a href="https://doi.org/10.48550/ARXIV.1803.09010">https://doi.org/10.48550/ARXIV.1803.09010</a>.
+</div>
+<div id="ref-gitelman2013" class="csl-entry" role="doc-biblioentry">
+Gitelman, Lisa, ed. 2013. <em>"Raw Data" Is an Oxymoron</em>. The MIT Press. <a href="https://doi.org/10.7551/mitpress/9302.001.0001">https://doi.org/10.7551/mitpress/9302.001.0001</a>.
+</div>
+<div id="ref-gladwell2019" class="csl-entry" role="doc-biblioentry">
+Gladwell, Malcolm. 2019. <em>Talking to Strangers</em>.
+</div>
+<div id="ref-lum2016" class="csl-entry" role="doc-biblioentry">
+Lum, Kristian, and William Isaac. 2016. <span>“To Predict and Serve?”</span> <em>Significance</em> 13 (5): 14–19. <a href="https://doi.org/10.1111/j.1740-9713.2016.00960.x">https://doi.org/10.1111/j.1740-9713.2016.00960.x</a>.
+</div>
+<div id="ref-mcnally" class="csl-entry" role="doc-biblioentry">
+McNally, Angelus. n.d. <span>“Creating Trustworthy AI for the Environment: Transparency, Bias, and Beneficial Use.”</span> <a href="https://www.scu.edu/environmental-ethics/resources/creating-trustworthy-ai-for-the-environment-transparency-bias-and-beneficial-use/">https://www.scu.edu/environmental-ethics/resources/creating-trustworthy-ai-for-the-environment-transparency-bias-and-beneficial-use/</a>.
+</div>
+<div id="ref-shacknai2022" class="csl-entry" role="doc-biblioentry">
+Shacknai, Gabby. 2022. <span>“Beauty in the Eye of the a.i.: How Inherent Racial Bias Has Shaped a.i. And What Brands Are Doing to Address It,”</span> November. <a href="https://fortune.com/2022/11/22/tech-forward-everyday-ai-beauty-bias/">https://fortune.com/2022/11/22/tech-forward-everyday-ai-beauty-bias/</a>.
+</div>
+</div></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p><span class="citation" data-cites="shacknai2022">(<a href="#ref-shacknai2022" role="doc-biblioref">Shacknai 2022</a>)</span><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Predictive policing is the use of computer algorithms to predict which neighborhoods to police.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{cutler2022,
+  author = {Victoria Cutler},
+  editor = {},
+  title = {Ethical {AI} for {Just} {Decision} {Making}},
+  date = {2022-12-07},
+  url = {https://victoriacutler.github.io/posts/2022-10-24-url-title/},
+  langid = {en}
+}
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-cutler2022" class="csl-entry quarto-appendix-citeas" role="doc-biblioentry">
+Victoria Cutler. 2022. <span>“Ethical AI for Just Decision
+Making.”</span> December 7, 2022. <a href="https://victoriacutler.github.io/posts/2022-10-24-url-title/">https://victoriacutler.github.io/posts/2022-10-24-url-title/</a>.
+</div></div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
