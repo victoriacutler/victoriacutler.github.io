@@ -11,12 +11,12 @@ categories: [ROOFTOP SOLAR, EQUITY, STATISTICS, R]
 citation:
   url: https://victoriacutler.github.io/posts/2022-12-22-solar-equity/
 bibliography: references.bib
-draft: false # "true" will mean this is a draft post so it wont show up on my site
 format:
   html:
     code-fold: true
     code-summary: "code dropdown"
 image: "preview-image.jpg"
+draft: false # "true" will mean this is a draft post so it wont show up on my site
 ---
 
 # Background
