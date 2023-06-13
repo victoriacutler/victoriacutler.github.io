@@ -5,13 +5,19 @@
 url('https://fonts.googleapis.com/css2?family=Montserrat&family=Nunito:wght@300&family=Roboto+Mono:wght@300&display=swap');
 
 // Colors
-$light-sage-green: #D1D9CE;
-$dark-sage-green: #98A08D;
-$cream: #FDFBF7;
-$dark-gray: #5A5856;
-$gray: #64605f;
+/*$light-sage-green: #D1D9CE; */
+$light-sage-green: #fef9f8;
+/*$dark-sage-green: #98A08D;*/
+$dark-sage-green: #0d0d0d;
+/*$cream: #FDFBF7;*/
+$cream: white;
+/*$dark-gray: #5A5856;*/
+$dark-gray: #f6c453;
+$gray: #0d0d0d;
+/*$gray: #64605f;*/
 $light-gray: #949799;
 $purple: #AE8BD1;
+/*$purple: #5f2c3e;*/
 $black: #000000;
 $burnt-orange: #ad7237;
 
@@ -172,8 +178,13 @@ https://github.com/robertmitchellv/robertmitchellv.github.io/blob/main/custom-da
   width: auto;
 } */
 
-.rounded { // headshot shape
+/*.rounded { // headshot shape
     border-radius: 50px 20px 50px 20px !important;
+    border: 4px solid $dark-gray;
+}*/
+img {
+  border: 6px solid #0d0d0d;
+  border-radius: 50%;
 }
 
 .about-link-text { // button text size (landing page)
