@@ -2,6 +2,7 @@
   {
     "listing": "/posts.html",
     "items": [
+      "/posts/title/index.html",
       "/posts/2022-12-07-AI/index.html",
       "/posts/2022-12-04-22-solar-equity/index.html"
     ]

@@ -1,0 +1,242 @@
+---
+title: "Kaggle Competition Winning Code: Predicting Ocean Acidification"
+description: "See below for the winning code for the kaggle competition!"
+author:
+  - name: Victoria Cutler
+    url: https://victoriacutler.github.io # can also add orchid id under here
+    affiliation: MEDS 
+    affiliation-url: https://ucsb-meds.github.io
+date: 2023-03-22
+categories: [CAL COFI, OCEAN ACIDIFICATION, MACHINE LEARNING, EXTREME GRADIENT BOOSTING, R]
+citation:
+  url: https://victoriacutler.github.io/posts/title/
+bibliography: references.bib
+format:
+  html:
+    code-fold: false
+    code-summary: "code dropdown"
+image: "preview-image.jpg"
+draft: true # "true" will mean this is a draft post so it wont show up on my site
+---
+
+## Competition Background
+
+XXX
+
+## Metadata
+
+View metadata by accessing this [link](https://calcofi.org/data/oceanographic-data/bottle-database/).
+
+## Load Libraries
+
+```{r}
+library(here)
+library(tidyverse)
+library(janitor)
+library(ggplot2)
+library(recipes)
+library(xgboost)
+library(beepr)
+```
+
+## Load and Clean Data
+
+```{r}
+# storing file paths
+train_file_path <- here("posts","title","data", "train.csv")
+test_file_path <- here("posts","title","data", "test.csv")
+
+# reading in data
+train_raw <- read_csv(file = train_file_path) |> 
+  clean_names() |> 
+  glimpse()
+
+test_raw <- read_csv(file = test_file_path) |> 
+  clean_names() |> 
+  glimpse()
+
+# looking at data frame similarities / differences
+colnames_df1 <- colnames(train_raw)
+colnames_df2 <- colnames(test_raw)
+  # common columns
+common_cols <- intersect(colnames_df1, colnames_df2)
+common_cols
+
+  # different columns
+unique_cols_df1 <- setdiff(colnames_df1, common_cols)
+unique_cols_df1
+
+unique_cols_df2 <- setdiff(colnames_df2, common_cols)
+unique_cols_df2
+
+# adjusting training data per column naming differences
+train_data <- train_raw |> 
+  select(-x13) |> # all NULL
+  rename(ta1 = ta1_x) # to match the test_raw naming
+```
+
+## Data Exploration
+
+```{r}
+# adding all the data together to plot data distributions for variables to check for variance / outliers to inform which ML algorithm to use
+full_data <- train_data |> 
+  select(-dic) |> 
+  rbind(test_raw)
+
+# histograms to explore data distributions and look at variance/outliers
+ggplot(data = full_data, aes(x = no2u_m)) +
+  geom_histogram()
+
+ggplot(data = full_data, aes(x = no3u_m)) +
+  geom_histogram()
+
+  # potential outliers here:
+ggplot(data = full_data, aes(x = nh3u_m)) +
+  geom_histogram()
+
+ggplot(data = full_data, aes(x = r_temp)) +
+  geom_histogram()
+
+  # potential outliers here:
+ggplot(data = full_data, aes(x = r_depth)) +
+  geom_histogram()
+
+ggplot(data = full_data, aes(x = r_sal)) +
+  geom_histogram()
+
+  # potential outliers here:
+ggplot(data = full_data, aes(x = r_dynht)) +
+  geom_histogram()
+
+  # potential outliers here:
+ggplot(data = full_data, aes(x = r_nuts)) +
+  geom_histogram()
+```
+
+## XGBoost Model
+
+### Recipe
+
+```{r, eval = FALSE}
+# using the xgboost model since this is a powerful ML algorithm that can handle outliers. Code is adapted from: https://bradleyboehmke.github.io/HOML/gbm.html
+
+  # recipe
+xgb_prep <- recipe(dic ~ ., data = train_data) %>%
+  prep(training = train_data, retain = TRUE) %>%
+  juice()
+
+  # separating data used for predictions from the predicted values
+X <- as.matrix(xgb_prep[setdiff(names(xgb_prep), "dic")])
+Y <- xgb_prep$dic
+```
+
+### Hyperparameter Tuning and Model Fit Assessment
+
+```{r, eval = FALSE}
+# set seed for reproducibility 
+set.seed(123)
+
+# creating a hyperparameter grid for all xgboost hyperparameters
+hyper_grid <- expand.grid(
+  eta = 0.01,
+  max_depth = 3, 
+  min_child_weight = 3,
+  subsample = 0.5, 
+  colsample_bytree = 0.5,
+  gamma = c(0, 1, 10, 100, 1000),
+  lambda = c(0, 1e-2, 0.1, 1, 100, 1000, 10000),
+  alpha = c(0, 1e-2, 0.1, 1, 100, 1000, 10000),
+  rmse = 0,          # a place to dump RMSE results
+  trees = 0          # a place to dump required number of trees
+)
+
+# loop to search through the grid and apply hyperparameters to all 10 cv folds
+for(i in seq_len(nrow(hyper_grid))) {
+  set.seed(123)
+  m <- xgb.cv(
+    data = X,
+    label = Y,
+    nrounds = 4000,
+    objective = "reg:squarederror",
+    early_stopping_rounds = 50, 
+    nfold = 10,
+    verbose = 0,
+    params = list( 
+      eta = hyper_grid$eta[i], 
+      max_depth = hyper_grid$max_depth[i],
+      min_child_weight = hyper_grid$min_child_weight[i],
+      subsample = hyper_grid$subsample[i],
+      colsample_bytree = hyper_grid$colsample_bytree[i],
+      gamma = hyper_grid$gamma[i], 
+      lambda = hyper_grid$lambda[i], 
+      alpha = hyper_grid$alpha[i]
+    ) 
+  )
+  hyper_grid$rmse[i] <- min(m$evaluation_log$test_rmse_mean)
+  hyper_grid$trees[i] <- m$best_iteration
+}
+
+# store results where rmse is greater than 0
+rmse_hp_results <- hyper_grid %>%
+  filter(rmse > 0) %>%
+  arrange(rmse)
+
+# store the best hyperparameters
+best_eta <- rmse_hp_results$eta[1]
+best_md <- rmse_hp_results$max_depth[1]
+best_cw <- rmse_hp_results$min_child_weight[1]
+best_ss <- rmse_hp_results$subsample[1]
+best_csbt <- rmse_hp_results$colsample_bytree[1]
+best_g <- rmse_hp_results$gamma[1]
+best_l <- rmse_hp_results$lambda[1]
+best_a <- rmse_hp_results$alpha[1]
+
+# beep when process is done
+beep()
+```
+
+### Training the Training Data Based on Optimal Hyperparameters
+
+```{r, eval = FALSE}
+# optimal parameter list
+params <- list(
+  eta = best_eta,
+  max_depth = best_md,
+  min_child_weight = best_cw,
+  subsample = best_ss,
+  colsample_bytree = best_csbt,
+  gamma = best_g,
+  lambda = best_l,
+  alpha = best_a
+)
+
+# train the model on the training data given these optimal parameters
+xgb.fit.final <- xgboost(
+  params = params,
+  data = X,
+  label = Y,
+  nrounds = 3944,
+  objective = "reg:squarederror",
+  verbose = 0
+)
+```
+
+### Predicting the Test Data Set DIC
+
+```{r, eval = FALSE}
+# predict the test data set
+X_test <- as.matrix(test_raw)
+y_pred <- predict(xgb.fit.final, newdata = X_test)
+test_data_with_pred <- cbind(test_raw, DIC = y_pred) |> 
+  select(id, DIC) # these are the only columns needed for kaggle competition
+```
+
+### Writing the Final File to a CSV
+
+```{r, eval = FALSE}
+# prompt the user to choose their own file name to write to a csv
+file_name <- file.choose(new = TRUE)
+
+# write test data predictions to a file
+write.csv(test_data_with_pred, file = file_name, row.names = FALSE)
+```
