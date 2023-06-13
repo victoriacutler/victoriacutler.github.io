@@ -5,37 +5,29 @@
 url('https://fonts.googleapis.com/css2?family=Montserrat&family=Nunito:wght@300&family=Roboto+Mono:wght@300&display=swap');
 
 // Colors
-/*$light-sage-green: #D1D9CE; */
-$light-sage-green: #fef9f8;
-/*$dark-sage-green: #98A08D;*/
-$dark-sage-green: #0d0d0d;
-/*$cream: #FDFBF7;*/
-$cream: white;
-/*$dark-gray: #5A5856;*/
-$dark-gray: #f6c453;
+$pink: #fef9f8;
+$dark-red: #0d0d0d;
+$white: white;
 $gray: #0d0d0d;
-/*$gray: #64605f;*/
-$light-gray: #949799;
 $purple: #AE8BD1;
-/*$purple: #5f2c3e;*/
 $black: #000000;
 $burnt-orange: #ad7237;
 
 // Base document colors
-$navbar-bg: $cream;
-$navbar-fg: $dark-sage-green; 
+$navbar-bg: $white;
+$navbar-fg: $dark-red; 
 $navbar-hl: $purple; 
-$body-bg: $light-sage-green;
+$body-bg: $pink;
 $body-color: $gray;
-$footer-bg: $cream; 
+$footer-bg: $white; 
 $link-color: $purple;
 
 // Inline code
-$code-bg: $cream;
+$code-bg: $white;
 $code-color: $burnt-orange; //$purple; 
 
 // Code blocks
-$code-block-bg: $cream;
+$code-block-bg: $white;
 
 /*-- scss:rules --*/
 
@@ -90,12 +82,8 @@ body {
   left: 50%;
 }
 
-.dark-gray-text{
+/*.dark-gray-text{
   color: $dark-gray;
-}
-
-/*.container {
-  display: flex;
 }*/
 
 .container { // for centering buttons
@@ -114,7 +102,7 @@ body {
 }
 
 .button-styling {
-  background: $light-sage-green;
+  background: $pink;
   border-color: $gray;
   color: $gray;
   border-radius: 0.6rem;
@@ -129,31 +117,8 @@ body {
 }
 
 .button-styling:hover {
-  background-color: $cream; 
+  background-color: $white; 
 }
-
-// Example from Meghan Hall
-/* .btn-primary {
-  color: $gray;
-  background-color: $light-sage-green;
-  border: 1px solid $gray;
-  width: 25%;
-  margin-bottom: 0;
-  text-align: center;
-  padding: 0px 2px;
-  border-radius: 25px;
-  vertical-align: middle;
-}
-.btn-primary:hover {
-  color: #ffffff;
-  background-color: #978e83;
-  border-color: white;
-}
-.btn-primary:focus {
-  color: #ffffff;
-  background-color: #978e83;
-  border-color: white;
-} */
 
 .gray-italic {
   color: $gray;
@@ -172,18 +137,8 @@ body {
 
 /* CLASS SELECTORS (copied from inspecting site -- Quarto defined?) */
 
-/* .navbar-brand img { // see 
-https://github.com/robertmitchellv/robertmitchellv.github.io/blob/main/custom-dark.scss
-  max-height: 60px;
-  width: auto;
-} */
-
-/*.rounded { // headshot shape
-    border-radius: 50px 20px 50px 20px !important;
-    border: 4px solid $dark-gray;
-}*/
-img {
-  border: 6px solid #0d0d0d;
+.IMG_3429 img {
+  border: 5px solid #0d0d0d;
   border-radius: 50%;
 }
 
@@ -196,14 +151,9 @@ img {
 }
 
 .card {
-  background-color: $cream;
+  background-color: $white;
   //border-radius: 5.25em;
 }
-
-/* .card-attribution {
-  //padding-top: 5em;
-  padding-bottom: 3em;
-} */
 
 .description {
   font-size: 25px;
