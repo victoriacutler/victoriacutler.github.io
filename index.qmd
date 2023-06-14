@@ -1,6 +1,6 @@
 ---
 title: "Victoria Cutler"
-image: IMG_3429.jpg
+image: vic_pic.jpg
 about: 
   template: trestles
   image-shape: round
@@ -22,9 +22,9 @@ Hi 👋🏼 I'm Victoria and I've recently graduated from the Bren School at UCS
 
 ### education
 
-Masters in Environmental Data Science \| 2023 \| Bren School at UCSB
+Master's in Environmental Data Science \| 2023 \| Bren School at UCSB
 
-BA in Environmental Science \| 2018 \| Colorado College
+Bachelor's in Environmental Science \| 2018 \| Colorado College
 
 ### experience
 
