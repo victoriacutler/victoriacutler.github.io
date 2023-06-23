@@ -1,6 +1,6 @@
 ---
 title: "Kaggle Competition Winning Code: Predicting Ocean Acidification"
-description: "See below for the winning code for the kaggle competition!"
+description: "Ocean acidification, driven primarily by human-induced carbon emissions, already poses a huge problem for our oceans, economy, and well being. For proper ecosystem management, is important to understand which areas of the ocean are at higher risk. This workbook uses machine learning techniques to accurately predict ocean acidification to aid in management."
 author:
   - name: Victoria Cutler
     url: https://victoriacutler.github.io # can also add orchid id under here
@@ -9,27 +9,31 @@ author:
 date: 2023-03-22
 categories: [CAL COFI, OCEAN ACIDIFICATION, MACHINE LEARNING, EXTREME GRADIENT BOOSTING, R]
 citation:
-  url: https://victoriacutler.github.io/posts/title/
+  url: https://victoriacutler.github.io/posts/predicting-ocean-acidification/
 bibliography: references.bib
 format:
   html:
     code-fold: false
     code-summary: "code dropdown"
-image: "preview-image.jpg"
-draft: true # "true" will mean this is a draft post so it wont show up on my site
+image: "preview-image.png"
+draft: false # "true" will mean this is a draft post so it wont show up on my site
 ---
 
-## Competition Background
+## What is Ocean Acidification?
 
-XXX
+Our oceans absorb about 30% of the CO~2~ in our atmosphere. So, as CO~2~ emissions increase, CO~2~ in our oceans does, as well. This may not sound like a problem, but CO~2~ quickly breaks down and creates acid that disintegrates things like sea shells and coral reefs that fish and shellfish depend on.[@NOAA2021] Coral and shellfish are important not only for the health of the ecosystem, but also us. More than 3 billion people around the world rely on food from our oceans[@TNC2021], and ocean acidification poses a huge risk to the availability of the food.
 
-## Metadata
+## Kaggle Competition Background
 
-View metadata by accessing this [link](https://calcofi.org/data/oceanographic-data/bottle-database/).
+The California Cooperative Oceanic Fisheries Investigations (CalCOFI for short) studies marine ecosystems across California to help drive sustainable environmental management in the context of climate change.[@CalCOFI2023] In March of 2023, CalCOFI partnered with the Bren School at UC Santa Barbara to search for an effective predictive model for ocean acidification. As part of my Environmental Data Science class, "Machine Learning in Environmental Science", us master's students had all entered the Kaggle competition to find the best predictive machine learning model given the data available[^1]. **The prize? CalCOFI swag** **(and helping sustainable ecosystem management).**
 
-## Load Libraries
+[^1]: The data and associated metadata can be found here: https://calcofi.org/data/oceanographic-data/bottle-database/
 
-```{r}
+## The Winning Kaggle Competition Code \[Note: Still Being Cleaned-Up!\]
+
+### Load Libraries
+
+```{r warning=FALSE, message=FALSE}
 library(here)
 library(tidyverse)
 library(janitor)
@@ -39,12 +43,12 @@ library(xgboost)
 library(beepr)
 ```
 
-## Load and Clean Data
+### Load and Clean Data
 
-```{r}
+```{r warning=FALSE, message=FALSE}
 # storing file paths
-train_file_path <- here("posts","title","data", "train.csv")
-test_file_path <- here("posts","title","data", "test.csv")
+train_file_path <- here("posts","predicting-ocean-acidification","data", "train.csv")
+test_file_path <- here("posts","predicting-ocean-acidification","data", "test.csv")
 
 # reading in data
 train_raw <- read_csv(file = train_file_path) |> 
@@ -75,7 +79,7 @@ train_data <- train_raw |>
   rename(ta1 = ta1_x) # to match the test_raw naming
 ```
 
-## Data Exploration
+### Data Exploration
 
 ```{r}
 # adding all the data together to plot data distributions for variables to check for variance / outliers to inform which ML algorithm to use
@@ -113,9 +117,9 @@ ggplot(data = full_data, aes(x = r_nuts)) +
   geom_histogram()
 ```
 
-## XGBoost Model
+### XGBoost Model
 
-### Recipe
+#### Recipe
 
 ```{r, eval = FALSE}
 # using the xgboost model since this is a powerful ML algorithm that can handle outliers. Code is adapted from: https://bradleyboehmke.github.io/HOML/gbm.html
@@ -130,7 +134,7 @@ X <- as.matrix(xgb_prep[setdiff(names(xgb_prep), "dic")])
 Y <- xgb_prep$dic
 ```
 
-### Hyperparameter Tuning and Model Fit Assessment
+#### Hyperparameter Tuning and Model Fit Assessment
 
 ```{r, eval = FALSE}
 # set seed for reproducibility 
@@ -195,7 +199,7 @@ best_a <- rmse_hp_results$alpha[1]
 beep()
 ```
 
-### Training the Training Data Based on Optimal Hyperparameters
+#### Training the Training Data Based on Optimal Hyperparameters
 
 ```{r, eval = FALSE}
 # optimal parameter list
@@ -221,7 +225,7 @@ xgb.fit.final <- xgboost(
 )
 ```
 
-### Predicting the Test Data Set DIC
+#### Predicting the Test Data Set DIC
 
 ```{r, eval = FALSE}
 # predict the test data set
@@ -231,7 +235,7 @@ test_data_with_pred <- cbind(test_raw, DIC = y_pred) |>
   select(id, DIC) # these are the only columns needed for kaggle competition
 ```
 
-### Writing the Final File to a CSV
+#### Writing the Final File to a CSV
 
 ```{r, eval = FALSE}
 # prompt the user to choose their own file name to write to a csv
