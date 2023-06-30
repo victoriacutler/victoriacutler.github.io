@@ -1,0 +1,18 @@
+---
+title: ""
+description: ""
+author:
+  - name: Victoria Cutler
+    url: https://victoriacutler.github.io # can also add orchid id under here
+    affiliation: MEDS 
+    affiliation-url: https://ucsb-meds.github.io
+date: 2023-07-20
+categories: [PYTHON, MARCH MADNESS, BASKETBALL, MACHINE LEARNING]
+citation:
+  url: https://victoriacutler.github.io/posts/march-madness-predictions/
+bibliography: references.bib
+image: "welcome-illustration.png"
+draft: true # "true" will mean this is a draft post so it wont show up on my site
+---
+
+[Use python and other basketball data to develop a march madness bracket]

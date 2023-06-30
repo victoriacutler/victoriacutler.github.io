@@ -1,0 +1,31 @@
+---
+title: ""
+description: ""
+author:
+  - name: Victoria Cutler
+    url: https://victoriacutler.github.io # can also add orchid id under here
+    affiliation: MEDS 
+    affiliation-url: https://ucsb-meds.github.io
+date: 2023-08-10
+categories: [ELECTRIC VEHICLES, ROAD TRIP]
+citation:
+  url: https://victoriacutler.github.io/posts/electric-vehicle-road-trip/
+bibliography: references.bib
+image: "welcome-illustration.png"
+draft: true # "true" will mean this is a draft post so it wont show up on my site
+---
+
+[Create a function that calculates how much in gas your road trip would cost / compare to EVs? 
+1. Describe in 2-3 sentences what the context is and what the goal of the modeling application would be.  
+Both gas-powered cars and electric-powered cars cost money to “fill up”. My goal is to figure out, on my hypothetical road trip across the country, how much money I would save by driving an electric-powered car. 
+2. Suggest what some of the most important inputs and outputs would be
+Some important inputs: average gas prices across states, average electric vehicle charging station costs, gas car tank size, electric vehicle battery size, miles driven between points, gas used per mile, electricity used per mile
+3. Suggest what kind of model you would need (e.g is it spatial, if so at what scale, would it be dynamic?)
+This model would be:
+Deterministic since the model would not provide a probability but an actual $ value in money saved
+Dynamic/spatially distributed in nature since the time step before and space before influences the next time step or space interaction (since the car might not need full charge or fill up in the next state/location)
+Physically based since we can find the data we need and we know the relationships 
+4. Describe how you might run the model to develop insight (e.g is there a sensitivity analysis of specific parameters (and ranges for them) that you might do to help to understand the situation?)
+We can use a sensitivity analysis to include uncertainty that considers unanticipated miles driven and how this effects $ saved (or lost), as well as uncertainty around gas/electric costs per states since this will likely vary given the pump/charger.]
+
+[Or create an interactive map that links to the charging stations and what makes sense in terms of price / miles off the road / time to charge]
