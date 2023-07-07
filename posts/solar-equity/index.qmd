@@ -1,0 +1,233 @@
+---
+title: "Is Rooftop Solar Equitable?"
+description: "Rooftop solar provides clean energy and cost savings - but are households of all incomes able to reap these benefits? This analysis shows that we see less rooftop solar in lower income neighborhoods. In other words, lower income households are disproportionately left out of rooftop solar benefits, and are disproportionately burdened by additional cost shifts."
+author:
+  - name: Victoria Cutler
+    url: https://victoriacutler.github.io # can also add orchid id under here
+    affiliation: MEDS 
+    affiliation-url: https://ucsb-meds.github.io
+date: 2022-12-04
+categories: [ROOFTOP SOLAR, EQUITY, STATISTICS, R]
+citation:
+  url: https://victoriacutler.github.io/posts/solar-equity/
+bibliography: references.bib
+format:
+  html:
+    code-fold: true
+    code-summary: "code dropdown"
+image: "preview-image.jpg"
+draft: false # "true" will mean this is a draft post so it wont show up on my site
+---
+
+# Background
+
+What you may already know of rooftop solar, is that it is a clean and often financially savvy way to supplement energy consumption. In California, households can effectively "sell" back the electricity generated at the same price point they would otherwise buy it for. Put differently, utilities buy back electricity at the rate that they sell it at, even while cheaper wholesale rates for solar are on the market to buy from. Who "pays" for this more expensive electricity that utilities are buying? The short answer is that customers without rooftop solar are paying. On November 10th 2022, the California Public Utilities Commission (CPUC) put forth a proposal that disincentivizes solar adoption and production: rolling back compensation and decreasing the maximum allowable install capacity (solar panel wattage). In the previous proposal in December 2021, the CPUC actually suggested tacking on a monthly fee to the bills of homes with rooftop solar, but this clause has since been walked back [@penn2022].
+
+Stakeholders across the energy industry all feel very differently on matter. On the one hand: we want to incentivize clean and decentralized energy generation. But on the other hand: we want to ensure that these cost shifts are not burdening those who lack access to solar, primarily low income households.[^1] Essentially, the question boils down to: how much should homeowners be paid for their rooftop solar energy exports and how much should rooftop solar users pay back to the utility?
+
+[^1]: Low income households often lack access to solar since (1) financing options are often needed to cover the high upfront cost of solar (2) if English isn't a first language, or if multiple jobs are worked, it may be a struggle to find the time to research solar, and (3) renters don't have the autonomy to install solar panels, and landlords do not have an incentive to help their tenants save on their electric bill.
+
+The current proposal is out for public comment through until the CPUC's five members take the proposal to a vote.
+
+# Objective
+
+In this post, I explore if income is a statistically significant predictor in rooftop solar adoption in California. I also look at overall solar saturation[^2] as an informal gauge of the potential growth and increased severity of this issue.
+
+[^2]: For a definition of "solar saturation" please refer to the "Methods" section, below, for a definition and example.
+
+# Methods
+
+Since disaggregated household data for income and rooftop solar is unavailable for public use, I use:
+
+1.  Income data on a census tract basis found [here](https://www.ffiec.gov/censusapp.htm) from the Federal Financial Institutions Examination Council (FFIEC) which maintains income-related census data available for download;
+2.  Rooftop solar data found [here](https://sunroof.withgoogle.com/data-explorer/featured/1/oklahoma-city) from Google Project Sunroof which uses Google overhead imagery, weather station data, and machine learning algorithms to estimate rooftop solar potential of US buildings down to the census tract level; and
+3.  California census tract spatial data found [here](https://catalog.data.gov/dataset/tiger-line-shapefile-2019-state-california-current-census-tract-state-based) for mapping and visualizing at the census tract level.
+
+After reading in the data, I clean the data, select only the columns of interest, and create additional columns needed for joining of data and performing analyses. Most notably, I created a variable called `pct_qual_with_solar`. This variable ranges from 0% to 100% and represents the ratio of number of buildings with solar with respect to the number of buildings deemed as "qualified" for rooftop solar[^3]. As an example, if census tract A has 10 buildings qualified for rooftop solar, and 4 buildings in census tract A already have rooftop solar, this census tract would have a `pct_qual_with_solar` of 40%. I refer to this variable as "solar saturation" since it reveals how saturated a census tract is in terms of rooftop solar adoption. The denominator in this variable is qualified homes as opposed to total buildings, since I feel the latter could lead to bias if income is correlated with locations with census tracts of low rooftop solar qualifications (such as insufficient roof size).
+
+[^3]: Per Google Project Sunroof criteria which considers amount of sunlight and roof space.
+
+```{r, echo=FALSE, results='hide', warning=FALSE, message=FALSE}
+# import libraries 
+library(tidyverse)
+library(here)
+library(janitor)
+library(stringr)
+library(spData)
+library(tmap)
+library(broom)
+library(sf)
+library(xtable)
+library(knitr)
+library(ggplot2)
+library(gridExtra)
+library(sjPlot)
+
+# define root directory
+rootdir <- "/Users/victoriacutler/Documents/MEDS/Courses/EDS222/finalproject"
+
+# read in the data
+  # solar data is from: https://sunroof.withgoogle.com/data-explorer/featured/1/oklahoma-city
+rawdata_solar <- read_csv(file.path(rootdir, "data", "project-sunroof-census_tract.csv")) 
+solar_meta <- read_csv(file.path(rootdir, "data", "metadata.csv"))
+  # income data is from: https://www.ffiec.gov/censusapp.htm
+rawdata_income <- read_csv(file.path(rootdir, "data", "2022CensusMsaStateCountyTractWithIncomeInd.csv"))
+  # california census tract shapefile from: https://catalog.data.gov/dataset/tiger-line-shapefile-2019-state-california-current-census-tract-state-based
+ca_shp <- read_sf(file.path(rootdir, "data","tl_2019_06_tract", "tl_2019_06_tract.shp"))
+
+# data clean up and tidying 
+
+# solar data clean up and tidying
+solardata <- rawdata_solar |> 
+  select(region_name, state_name, count_qualified, percent_qualified, number_of_panels_median, number_of_panels_total, yearly_sunlight_kwh_median, yearly_sunlight_kwh_total, existing_installs_count) |>  # limit to variables of interest, removing percent covered since range is above 100%
+  drop_na() |> # remove any rows with NA values
+  mutate(pct_qual_with_solar = (existing_installs_count/count_qualified) * 100) |> # small numbers mean that this census tract is not living up to it's potential in terms of solar! 
+  rename(census_tract_id = region_name) |> 
+  filter(state_name == "California")
+  
+# income data clean up and tidying
+incomedata <- rawdata_income |> 
+  clean_names() |> 
+  mutate(state_code = as.character(state_code)) |> 
+  mutate(county_code = as.character(county_code)) |> 
+  mutate(tract = as.character(tract)) |> 
+  mutate(state_code = str_pad(state_code, 2, pad = "0")) |> 
+  mutate(county_code = str_pad(county_code, 3, pad = "0")) |> 
+  mutate(tract = str_pad(tract, 6, pad = "0")) |> 
+  mutate(census_tract_id = paste0(state_code, county_code, tract)) |> 
+  filter(income_percent != 0 | tract_med_family_income != 0 | income_percent != 0) |> # removing 0s since this is inaccurate data
+  select(year, state_code, tract_med_family_income, income_percent, income_level_ind, census_tract_id) |> 
+  drop_na() |> 
+  filter(state_code == "06")
+
+# join data
+cleandata <- inner_join(incomedata, solardata, by = "census_tract_id")
+```
+
+I first look at the distribution of the solar saturation for California. We see right skew which hints that these data may be a good candidate for log-normalization. However, after taking the log of my data and performing an Ordinary Least Squares (OSL) regression on the log-normalized data, I noticed that the assumptions for OLS were not drastically better met. Additionally, due to the large amount of data we have at 0% solar saturation, to perform a log-normalized OLS regression, this would require either data manipulation, or removing much of the data.
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+# Exploration of Distribution/Normality of Solar Data
+
+  # solar data distribution for California
+ggplot(data = cleandata, aes(x = pct_qual_with_solar)) +
+  geom_histogram() +
+  theme_classic() +
+  xlab("Solar Saturation (%)") +
+  ylab("Count") +
+  labs(title = "Fig 1. Count of Census Tracts According to Solar Adoption Percentage")
+```
+
+In running my regression, I determine it makes the most sense to account for sunlight when looking at the relationship between census tract income and census tract solar generation. This is because, similar to how solar-qualified buildings may correlate with income, sunlight may also correlate with income, and we want to ensure we are mitigating any omitted variables bias.
+
+I therefore regress as follows:
+
+$$pctsolarsat_i =\beta_{0}+\beta_{1} \cdot sunlight_i +\beta_{2} \cdot \text income_i+\varepsilon_i$$
+
+While I considered that there may be an interaction effect between income and sunlight, I found that variance in solar adoption was not largely explained by this interaction.
+
+Running this regression effectively performs a hypothesis test for us where I have:
+
+\- The Null Hypothesis: There is no relationship between census tract median income and solar saturation.
+
+\- The Alternative Hypothesis: There is a relationship between census tract median income and solar saturation.
+
+# Results and Discussion
+
+### Linear Regression & Hypothesis Testing
+
+After regressing, I end up with the following model:
+
+$$solarsaturation =-0.68 + 0.0000080 \cdot sunlight + 0.0000384 \cdot income$$
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+mod_ca <- lm(pct_qual_with_solar ~ tract_med_family_income + yearly_sunlight_kwh_median, data = cleandata)
+
+# code adapted from Jake Eisaguirre: https://jake-eisaguirre.github.io/posts/2021-11-29-mpasandkelp/
+tab_model(mod_ca,
+          pred.labels = c("Intercept", "Median Income", "Average Yearly Sunlight Generation (kWh)"),
+          dv.labels = c("Solar Saturation (%)"),
+          string.ci = "Conf. Int (95%)",
+          string.p = "P-value",
+          title = "Tbl 1. Linear Model Results for Below Predictors",
+          digits = 7)
+```
+
+We see from this model output that both median income and sunlight have a positive effect on solar saturation in a census tract, which is expected. This effect is statistically significant (p \< 0.001) and we can therefore reject the null hypothesis that census tract income has no relationship with solar saturation.
+
+Since our coefficient for median income is 0.0000384, for every \$1 increase in median yearly income, our model predicts a 0.0000384% increase in solar saturation for that census tract. To put this in more real world terms, for every \$26,042 increase in yearly median census tract income, this model predicts a 1% increase in solar saturation.
+
+In separate calculations, I also find that the mean solar saturation in higher income census tracts is 4.85%, compared to merely 1.69% in lower income census tracts.
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+# looking at median income status difference in means
+
+median_income_ca = median(cleandata$tract_med_family_income)
+
+cleandata_meandifs <- cleandata |> 
+    mutate(med_income_ind = case_when(tract_med_family_income <= median_income_ca ~ "lower_income",
+                                    tract_med_family_income > median_income_ca ~ "higher_income"))
+
+#t_test_output <- t.test(pct_qual_with_solar ~ med_income_ind, data = cleandata_meandifs, conf.level = 0.95)
+```
+
+### Spatial Analysis
+
+To visualize this difference in census tract solar adoption, I map solar saturation by census tract for both higher income census tracts and lower income census tracts. You can see, below, visually, that there are much higher saturation levels (represented by the darker blues) in the higher income census tracts. You can also see, evidenced by the amount of grey, that there is missing data for a large number of census tracts. This is due to missing solar data for about 557 of the approximately 8,057 census tracts in California. This could lead to bias in the model, especially if this missing data is not due to random factors.
+
+Another take away from this visual is how low solar saturation percentages are overall. This is good and bad news. It means there is still a lot of potential for rooftop solar growth, which is great for clean energy growth. However, this also drives home how important it is to ensure equity in the rooftop solar industry, since these inequities may escalate as solar adoption continues to increase.
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+spatialdata <- merge(ca_shp, cleandata_meandifs, by.x = "GEOID", by.y = "census_tract_id", all.x = TRUE)
+
+tmap_mode("view")
+
+higherincome <- spatialdata |> 
+  filter(med_income_ind == "higher_income")
+
+lowerincome <- spatialdata |> 
+  filter(med_income_ind == "lower_income")
+
+higherincome_map <- tm_shape(higherincome) +
+  tm_fill(col = "pct_qual_with_solar",
+          breaks = c(0, 5, 10, 15, 20, 25, Inf),
+          title = "Figure 2. Higher Income Census Tract Solar Saturation (%)",
+          style = "pretty",
+          palette = "Blues")
+
+lowerincome_map <- tm_shape(lowerincome) +
+  tm_fill(col = "pct_qual_with_solar",
+          breaks = c(0, 5, 10, 15, 20, 25, Inf),
+          title = "Figure 3. Lower Income Census Tract Solar Saturation (%)",
+          style = "pretty",
+          palette = "Blues")
+
+tmap_arrange(higherincome_map, lowerincome_map)
+```
+
+# Opportunities for Improvement
+
+While the findings of this study are statistically significant, this model may still be experiencing sources of bias. Below I outline those potential biases, and how further research could aid in better model development:
+
+1.  **Missing solar data**
+
+    As mentioned above, the solar data sourced from Google Project Sunroof is missing data from 557 census tracts in California. It is therefore possible that this missing data is creating bias in our model. To ensure that this is not the case, further research could be done to (1) obtain data from these census tracts or (2) inquire to Google Project Sunroof to understand their methodology and gauge whether or not this would lead to an unrepresentative sample.
+
+    ```{r, echo=FALSE, warning=FALSE, message=FALSE}
+    solar_censustracts <- length(unique(solardata$census_tract_id))
+    ca_censustracts <- length(unique(ca_shp$GEOID))
+
+    dif_censustracts <- ca_censustracts - solar_censustracts
+    ```
+
+2.  **Inclusion of non-residential buildings**
+
+    Google Project Sunroof looks at building solar potential for all buildings, not just residential buildings. If non-residential buildings and associated solar adoption is not randomly distributed across census tracts, this could lead to bias in this model. For better modeling, Google Project Sunroof developers could distinguish non-residential and residential buildings.
+
+3.  **Missing variables**
+
+    With any model, there is a chance of omitted variables bias. For further research, I suggest looking into other potential variables that may be correlated with income. Including demographic information such as race could be a good place to start.
+
+# Conclusion
+
+This statistical analysis provides evidence that low income households have statistically significantly lower levels of rooftop solar adoption. We also see that solar saturation percentages are quite low, which suggests that the rooftop solar industry has the potential to grow much larger. This means that it is of utmost importance that rooftop solar policy is equitable. The California Public Utilities Commission is likely to approve policy to lower financial incentives to rooftop solar adoption due, in large part, to equity concerns. I hope, however, to see policy that encourages rooftop solar but also ensures equity.
