@@ -1,5 +1,5 @@
 ---
-title: "Remote Sensing Applications"
+title: "Remote Sensing for Environmental Issues"
 description: "We can glean a lot of information from remote sensing with both true- and false- colored satellite imagery. Check out this post to see some meaningful environmental applications."
 author:
   - name: Victoria Cutler
