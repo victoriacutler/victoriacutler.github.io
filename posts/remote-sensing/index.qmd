@@ -1,0 +1,41 @@
+---
+title: "Remote Sensing Applications"
+description: ""
+author:
+  - name: Victoria Cutler
+    url: https://victoriacutler.github.io # can also add orchid id under here
+    affiliation: MEDS 
+    affiliation-url: https://ucsb-meds.github.io
+date: 2023-07-09
+categories: [PYTHON, REMOTE SENSING, VEGETATIVE HEALTH, NDVI, DEFORESTATION, LAND COVER CHANGE, GOOGLE EARTH ENGINE, LANDSAT]
+citation:
+  url: https://victoriacutler.github.io/posts/remote-sensing/
+bibliography: references.bib
+image: "land-cover.png"
+format:
+  html:
+    code-fold: false
+draft: false # "true" will mean this is a draft post so it wont show up on my site
+---
+
+# Welcome!
+
+Below I have some cool and meaningful applications of remote sensing from classwork, homework, and other projects.
+
+------------------------------------------------------------------------
+
+### Remote Sensing with Landsat Satellite Imagery: Gauging Vegetative Health with NDVI[^1]
+
+[^1]: Forked from Dr. Samantha Stevenson: https://github.com/victoriacutler/workingwithenvironmentaldatasets-remotesensing
+
+**Background:** The normalized difference vegetation index (commonly known as NDVI) may sound complicated and confusing, but in reality, this index is quite simple and very informative. NDVI essentially quantifies plant health. How can we do this? We know that healthy vegetation reflects certain wavelengths, and unhealthy vegetation does not. We can therefore utilize false color images that show red and near infrared wavelength reflectance to assess vegetative health, as shown below.
+
+<embed src="files/NDVI_Landsat_GEE.html" width="100%" height="800px" type="application/pdf">
+
+------------------------------------------------------------------------
+
+### Remote Sensing with Google Earth Engine (GEE): Analyzing Deforestation and Land Cover Change
+
+**Background:** Utilizing satellite imagery of land cover data, my team looked into deforestation, wildfire, and land cover change as part of our final project.
+
+<embed src="files/finalproject.html" width="100%" height="800px" type="application/pdf">
