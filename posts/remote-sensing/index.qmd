@@ -1,6 +1,6 @@
 ---
 title: "Remote Sensing Applications"
-description: ""
+description: "We can glean a lot of information from remote sensing with both true- and false- colored satellite imagery. Check out this post to see some meaningful environmental applications."
 author:
   - name: Victoria Cutler
     url: https://victoriacutler.github.io # can also add orchid id under here
