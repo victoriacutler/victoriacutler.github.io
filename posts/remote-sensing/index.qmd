@@ -30,7 +30,7 @@ Below I have some cool and meaningful applications of remote sensing from classw
 
 **Background:** The normalized difference vegetation index (commonly known as NDVI) may sound complicated and confusing, but in reality, this index is quite simple and very informative. NDVI essentially quantifies plant health. How can we do this? We know that healthy vegetation reflects certain wavelengths, and unhealthy vegetation does not. We can therefore utilize false color images that show red and near infrared wavelength reflectance to assess vegetative health, as shown below.
 
-<embed src="files/NDVI_Landsat_GEE.html" width="100%" height="800px" type="application/pdf">
+<iframe src="files/NDVI_Landsat_GEE.html" width="100%" height="800px"></iframe>
 
 ------------------------------------------------------------------------
 
@@ -38,4 +38,4 @@ Below I have some cool and meaningful applications of remote sensing from classw
 
 **Background:** Utilizing satellite imagery of land cover data, my team looked into deforestation, wildfire, and land cover change as part of our final project.
 
-<embed src="files/finalproject.html" width="100%" height="800px" type="application/pdf">
+<iframe src="files/finalproject.html" width="100%" height="800px"></iframe>
