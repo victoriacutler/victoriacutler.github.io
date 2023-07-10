@@ -1,6 +1,6 @@
 ---
 title: "Victoria Cutler"
-image: vic-pic-green.jpg
+image: vic-pic-white.jpg
 about: 
   template: trestles
   image-shape: round
