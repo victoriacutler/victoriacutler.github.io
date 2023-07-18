@@ -1,6 +1,6 @@
 ---
 title: "Is Rooftop Solar Equitable?"
-description: "Rooftop solar provides clean energy and cost savings - but are households of all incomes able to reap these benefits? This analysis shows that we see less rooftop solar in lower income neighborhoods. In other words, lower income households are disproportionately left out of rooftop solar benefits, and are disproportionately burdened by additional cost shifts."
+description: "Who benefits from solar and who absorbs the drawbacks?"
 author:
   - name: Victoria Cutler
     url: https://victoriacutler.github.io # can also add orchid id under here
@@ -18,6 +18,8 @@ format:
 image: "preview-image.jpg"
 draft: false # "true" will mean this is a draft post so it wont show up on my site
 ---
+
+Rooftop solar provides clean energy and cost savings - but are households of all incomes able to reap these benefits? This analysis shows that we see less rooftop solar in lower income neighborhoods. In other words, lower income households are disproportionately left out of rooftop solar benefits, and are disproportionately burdened by additional cost shifts.
 
 # Background
 

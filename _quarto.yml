@@ -38,6 +38,6 @@ format:
     theme:
       - red_theme.scss
     # css: styles.css
-    mainfont: Nunito
+    mainfont: Roboto
     toc: true
 

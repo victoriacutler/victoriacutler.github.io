@@ -1,6 +1,6 @@
 ---
 title: "Predicting Ocean Acidification for Ecosystem Management"
-description: "Ocean acidification, driven primarily by human-induced carbon emissions, already poses a huge problem for our oceans, economy, and well being. For proper ecosystem management, is important to understand which areas of the ocean are at higher risk. This workbook uses machine learning techniques to accurately predict ocean acidification to aid in management."
+description: "A journey through my code to the winning RMSE score."
 author:
   - name: Victoria Cutler
     url: https://victoriacutler.github.io # can also add orchid id under here
@@ -18,6 +18,8 @@ format:
 image: "preview-image.png"
 draft: false # "true" will mean this is a draft post so it wont show up on my site
 ---
+
+Ocean acidification, driven primarily by human-induced carbon emissions, already poses a huge problem for our oceans, economy, and well being. For proper ecosystem management, is important to understand which areas of the ocean are at higher risk. This workbook uses machine learning techniques to accurately predict ocean acidification to aid in management.
 
 ## What is Ocean Acidification?
 
