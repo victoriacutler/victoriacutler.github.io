@@ -1,5 +1,5 @@
 ---
-title: "Kaggle Competition Winning Code: Predicting Ocean Acidification"
+title: "Predicting Ocean Acidification for Ecosystem Management"
 description: "Ocean acidification, driven primarily by human-induced carbon emissions, already poses a huge problem for our oceans, economy, and well being. For proper ecosystem management, is important to understand which areas of the ocean are at higher risk. This workbook uses machine learning techniques to accurately predict ocean acidification to aid in management."
 author:
   - name: Victoria Cutler
@@ -21,7 +21,7 @@ draft: false # "true" will mean this is a draft post so it wont show up on my si
 
 ## What is Ocean Acidification?
 
-Our oceans absorb about 30% of the CO~2~ in our atmosphere. So, as CO~2~ emissions increase, CO~2~ in our oceans does, as well. This may not sound like a problem, but CO~2~ quickly breaks down and creates acid that disintegrates things like sea shells and coral reefs that fish and shellfish depend on.[@NOAA2021] Coral and shellfish are important not only for the health of the ecosystem, but also us. More than 3 billion people around the world rely on food from our oceans[@TNC2021], and ocean acidification poses a huge risk to the availability of the food.
+Our oceans absorb about 30% of the CO~2~ in our atmosphere. So, as CO~2~ emissions increase, CO~2~ in our oceans does, as well. This may not sound like a problem, but CO~2~ quickly breaks down and creates acid that disintegrates things like sea shells and coral reefs that fish, shellfish, and ultimately, humans, depend on. [@NOAA2021] More than 3 billion people around the world rely on food from our oceans[@TNC2021], and ocean acidification poses a huge risk to the availability of the food.
 
 ## Kaggle Competition Background
 
@@ -29,7 +29,11 @@ The California Cooperative Oceanic Fisheries Investigations (CalCOFI for short) 
 
 [^1]: The data and associated metadata can be found here: https://calcofi.org/data/oceanographic-data/bottle-database/
 
-## The Winning Kaggle Competition Code \[Note: Still Being Cleaned-Up!\]
+## The Winning Competition Code
+
+Yes, I won. Don't be so shocked. And yes, I got a lot of swag! Please read on, below, for not just the code but also my thought process a long the way.
+
+![See above for the final Kaggle Competition leaderboard results](./leaderboard.png)
 
 ### Load Libraries
 
@@ -45,16 +49,21 @@ library(beepr)
 
 ### Load and Clean Data
 
+Here I load in the training and testing data (already pre-split to ensure consistency in competition assessment). I then correct any data quality issues. It turned out that the training and testing data had a couple inconsistencies, so I fixed those up and removed any unnecessary columns.
+
 ```{r warning=FALSE, message=FALSE}
 # storing file paths
 train_file_path <- here("posts","predicting-ocean-acidification","data", "train.csv")
 test_file_path <- here("posts","predicting-ocean-acidification","data", "test.csv")
 
 # reading in data
+
+  # raw training data
 train_raw <- read_csv(file = train_file_path) |> 
   clean_names() |> 
   glimpse()
 
+  # raw testing data
 test_raw <- read_csv(file = test_file_path) |> 
   clean_names() |> 
   glimpse()
@@ -66,7 +75,7 @@ colnames_df2 <- colnames(test_raw)
 common_cols <- intersect(colnames_df1, colnames_df2)
 common_cols
 
-  # different columns
+  # looking for different columns between the training and testing data
 unique_cols_df1 <- setdiff(colnames_df1, common_cols)
 unique_cols_df1
 
@@ -75,16 +84,18 @@ unique_cols_df2
 
 # adjusting training data per column naming differences
 train_data <- train_raw |> 
-  select(-x13) |> # all NULL
-  rename(ta1 = ta1_x) # to match the test_raw naming
+  select(-x13) |> # removing since all NULL
+  rename(ta1 = ta1_x) # changing the name to match the test_raw naming
 ```
 
-### Data Exploration
+### Data Exploration for Machine Learning Algorithm Selection
+
+Below I create a full data set with both the training and testing data. I then explore data distributions for each of the features since this will inform the machine learning algorithm I select for ocean acidification prediction.
 
 ```{r}
-# adding all the data together to plot data distributions for variables to check for variance / outliers to inform which ML algorithm to use
+# adding all the data together to plot data distributions for each variable. This is to check variance and outliers to inform which ML algorithm to use
 full_data <- train_data |> 
-  select(-dic) |> 
+  select(-dic) |> # removing the dic variable we're predicting since the test data doesn't have this variable and i don't want to look at the data distribution in case leaving out the test data introduces bias
   rbind(test_raw)
 
 # histograms to explore data distributions and look at variance/outliers
@@ -94,30 +105,28 @@ ggplot(data = full_data, aes(x = no2u_m)) +
 ggplot(data = full_data, aes(x = no3u_m)) +
   geom_histogram()
 
-  # potential outliers here:
 ggplot(data = full_data, aes(x = nh3u_m)) +
-  geom_histogram()
+  geom_histogram() # potential outliers here
 
 ggplot(data = full_data, aes(x = r_temp)) +
   geom_histogram()
 
-  # potential outliers here:
 ggplot(data = full_data, aes(x = r_depth)) +
-  geom_histogram()
+  geom_histogram() # potential outliers here:
 
 ggplot(data = full_data, aes(x = r_sal)) +
   geom_histogram()
 
-  # potential outliers here:
 ggplot(data = full_data, aes(x = r_dynht)) +
-  geom_histogram()
+  geom_histogram() # potential outliers here
 
-  # potential outliers here:
 ggplot(data = full_data, aes(x = r_nuts)) +
-  geom_histogram()
+  geom_histogram() # potential outliers here
 ```
 
 ### XGBoost Model
+
+After plotting the data distributions, I see a lot of outliers. I also know that I can't use a classification algorithm since my prediction variable is continuous. I choose to build an extreme gradient boosted treet (XGBoost) machine learning algorithm to build my ocean acidification prediction model. I use this algorithm since gradient boosted models, if properly tuned, can be the most flexible and accurate predictive models. I choose an extreme gradient boosted model since it can handle outliers well and has many hyperparameters that reduce overfitting.
 
 #### Recipe
 
@@ -125,7 +134,7 @@ ggplot(data = full_data, aes(x = r_nuts)) +
 # using the xgboost model since this is a powerful ML algorithm that can handle outliers. Code is adapted from: https://bradleyboehmke.github.io/HOML/gbm.html
 
   # recipe
-xgb_prep <- recipe(dic ~ ., data = train_data) %>%
+xgb_prep <- recipe(dic ~ ., data = train_data) %>% # using all features for predicting dic (ocean acidification)
   prep(training = train_data, retain = TRUE) %>%
   juice()
 
@@ -195,7 +204,7 @@ best_g <- rmse_hp_results$gamma[1]
 best_l <- rmse_hp_results$lambda[1]
 best_a <- rmse_hp_results$alpha[1]
 
-# beep when process is done
+# beep when process is done since this process can take hours
 beep()
 ```
 
@@ -225,17 +234,18 @@ xgb.fit.final <- xgboost(
 )
 ```
 
-#### Predicting the Test Data Set DIC
+#### Predicting the Test Data Set Ocean Acidification for Competition Assessment 
 
 ```{r, eval = FALSE}
-# predict the test data set
+# predict on the test data set
 X_test <- as.matrix(test_raw)
 y_pred <- predict(xgb.fit.final, newdata = X_test)
+
 test_data_with_pred <- cbind(test_raw, DIC = y_pred) |> 
   select(id, DIC) # these are the only columns needed for kaggle competition
 ```
 
-#### Writing the Final File to a CSV
+#### Writing the Final File to a CSV for Competition Assessment
 
 ```{r, eval = FALSE}
 # prompt the user to choose their own file name to write to a csv
@@ -244,3 +254,9 @@ file_name <- file.choose(new = TRUE)
 # write test data predictions to a file
 write.csv(test_data_with_pred, file = file_name, row.names = FALSE)
 ```
+
+#### Final Thoughts
+
+Before the Kaggle Competition closed, each "test data" submission (aka each submission of ocean acidification predictions) were automatically assessed against the *real* ocean acidification values. Each submission was then given a root mean squared error (RMSE) score based on performance, and everyone could see on the leaderboard how their model performance stacked up compared to others' model performance. I noticed that many people submitted many times, re-training and fine tuning their models to get better performance.
+
+However, the RMSE score was calculated only using 70% of the submitted data. This meant that the other 30% of the data were left out of RMSE performance metrics prior to the competition end date. As a result, every time a classmate re-trained a model to obtain better performance, they were essentially over fitting to that 70% of the training data. My hunch is that my model won because the 30% of data withheld were not representative of the patterns found in the rest of the data, and I made sure to not introduce bias by re-training and re-tuning my model to serve that 70%.

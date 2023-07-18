@@ -10,7 +10,7 @@
 <meta name="dcterms.date" content="2023-03-22">
 <meta name="description" content="Ocean acidification, driven primarily by human-induced carbon emissions, already poses a huge problem for our oceans, economy, and well being. For proper ecosystem management, is important to understand which areas of the ocean are at higher risk. This workbook uses machine learning techniques to accurately predict ocean acidification to aid in management.">
 
-<title>Kaggle Competition Winning Code: Predicting Ocean Acidification</title>
+<title>Predicting Ocean Acidification for Ecosystem Management</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -197,7 +197,7 @@ div.csl-indent {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-page-left">
-      <h1 class="title">Kaggle Competition Winning Code: Predicting Ocean Acidification</h1>
+      <h1 class="title">Predicting Ocean Acidification for Ecosystem Management</h1>
                   <div>
         <div class="description">
           Ocean acidification, driven primarily by human-induced carbon emissions, already poses a huge problem for our oceans, economy, and well being. For proper ecosystem management, is important to understand which areas of the ocean are at higher risk. This workbook uses machine learning techniques to accurately predict ocean acidification to aid in management.
@@ -252,11 +252,11 @@ div.csl-indent {
   <ul>
   <li><a href="#what-is-ocean-acidification" id="toc-what-is-ocean-acidification" class="nav-link active" data-scroll-target="#what-is-ocean-acidification">What is Ocean Acidification?</a></li>
   <li><a href="#kaggle-competition-background" id="toc-kaggle-competition-background" class="nav-link" data-scroll-target="#kaggle-competition-background">Kaggle Competition Background</a></li>
-  <li><a href="#the-winning-kaggle-competition-code-note-still-being-cleaned-up" id="toc-the-winning-kaggle-competition-code-note-still-being-cleaned-up" class="nav-link" data-scroll-target="#the-winning-kaggle-competition-code-note-still-being-cleaned-up">The Winning Kaggle Competition Code [Note: Still Being Cleaned-Up!]</a>
+  <li><a href="#the-winning-competition-code" id="toc-the-winning-competition-code" class="nav-link" data-scroll-target="#the-winning-competition-code">The Winning Competition Code</a>
   <ul class="collapse">
   <li><a href="#load-libraries" id="toc-load-libraries" class="nav-link" data-scroll-target="#load-libraries">Load Libraries</a></li>
   <li><a href="#load-and-clean-data" id="toc-load-and-clean-data" class="nav-link" data-scroll-target="#load-and-clean-data">Load and Clean Data</a></li>
-  <li><a href="#data-exploration" id="toc-data-exploration" class="nav-link" data-scroll-target="#data-exploration">Data Exploration</a></li>
+  <li><a href="#data-exploration-for-machine-learning-algorithm-selection" id="toc-data-exploration-for-machine-learning-algorithm-selection" class="nav-link" data-scroll-target="#data-exploration-for-machine-learning-algorithm-selection">Data Exploration for Machine Learning Algorithm Selection</a></li>
   <li><a href="#xgboost-model" id="toc-xgboost-model" class="nav-link" data-scroll-target="#xgboost-model">XGBoost Model</a></li>
   </ul></li>
   </ul>
@@ -270,14 +270,21 @@ div.csl-indent {
 
 <section id="what-is-ocean-acidification" class="level2">
 <h2 class="anchored" data-anchor-id="what-is-ocean-acidification">What is Ocean Acidification?</h2>
-<p>Our oceans absorb about 30% of the CO<sub>2</sub> in our atmosphere. So, as CO<sub>2</sub> emissions increase, CO<sub>2</sub> in our oceans does, as well. This may not sound like a problem, but CO<sub>2</sub> quickly breaks down and creates acid that disintegrates things like sea shells and coral reefs that fish and shellfish depend on.<span class="citation" data-cites="NOAA2021">(<a href="#ref-NOAA2021" role="doc-biblioref"><span>“What Is Ocean Acidification?”</span> 2023</a>)</span> Coral and shellfish are important not only for the health of the ecosystem, but also us. More than 3 billion people around the world rely on food from our oceans<span class="citation" data-cites="TNC2021">(<a href="#ref-TNC2021" role="doc-biblioref"><span>“A Healthy Ocean Depends on Sustainably Managed Fisheries”</span> 2021</a>)</span>, and ocean acidification poses a huge risk to the availability of the food.</p>
+<p>Our oceans absorb about 30% of the CO<sub>2</sub> in our atmosphere. So, as CO<sub>2</sub> emissions increase, CO<sub>2</sub> in our oceans does, as well. This may not sound like a problem, but CO<sub>2</sub> quickly breaks down and creates acid that disintegrates things like sea shells and coral reefs that fish, shellfish, and ultimately, humans, depend on. <span class="citation" data-cites="NOAA2021">(<a href="#ref-NOAA2021" role="doc-biblioref"><span>“What Is Ocean Acidification?”</span> 2023</a>)</span> More than 3 billion people around the world rely on food from our oceans<span class="citation" data-cites="TNC2021">(<a href="#ref-TNC2021" role="doc-biblioref"><span>“A Healthy Ocean Depends on Sustainably Managed Fisheries”</span> 2021</a>)</span>, and ocean acidification poses a huge risk to the availability of the food.</p>
 </section>
 <section id="kaggle-competition-background" class="level2">
 <h2 class="anchored" data-anchor-id="kaggle-competition-background">Kaggle Competition Background</h2>
 <p>The California Cooperative Oceanic Fisheries Investigations (CalCOFI for short) studies marine ecosystems across California to help drive sustainable environmental management in the context of climate change.<span class="citation" data-cites="CalCOFI2023">(<a href="#ref-CalCOFI2023" role="doc-biblioref"><span>“About CalCOFI,”</span> n.d.</a>)</span> In March of 2023, CalCOFI partnered with the Bren School at UC Santa Barbara to search for an effective predictive model for ocean acidification. As part of my Environmental Data Science class, “Machine Learning in Environmental Science”, us master’s students had all entered the Kaggle competition to find the best predictive machine learning model given the data available<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. <strong>The prize? CalCOFI swag</strong> <strong>(and helping sustainable ecosystem management).</strong></p>
 </section>
-<section id="the-winning-kaggle-competition-code-note-still-being-cleaned-up" class="level2">
-<h2 class="anchored" data-anchor-id="the-winning-kaggle-competition-code-note-still-being-cleaned-up">The Winning Kaggle Competition Code [Note: Still Being Cleaned-Up!]</h2>
+<section id="the-winning-competition-code" class="level2">
+<h2 class="anchored" data-anchor-id="the-winning-competition-code">The Winning Competition Code</h2>
+<p>Yes, I won. Don’t be so shocked. And yes, I got a lot of swag! Please read on, below, for not just the code but also my thought process a long the way.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./leaderboard.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">See above for the final Kaggle Competition leaderboard results</figcaption><p></p>
+</figure>
+</div>
 <section id="load-libraries" class="level3">
 <h3 class="anchored" data-anchor-id="load-libraries">Load Libraries</h3>
 <div class="cell">
@@ -292,15 +299,18 @@ div.csl-indent {
 </section>
 <section id="load-and-clean-data" class="level3">
 <h3 class="anchored" data-anchor-id="load-and-clean-data">Load and Clean Data</h3>
+<p>Here I load in the training and testing data (already pre-split to ensure consistency in competition assessment). I then correct any data quality issues. It turned out that the training and testing data had a couple inconsistencies, so I fixed those up and removed any unnecessary columns.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># storing file paths</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>train_file_path <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">"posts"</span>,<span class="st">"predicting-ocean-acidification"</span>,<span class="st">"data"</span>, <span class="st">"train.csv"</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>test_file_path <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">"posts"</span>,<span class="st">"predicting-ocean-acidification"</span>,<span class="st">"data"</span>, <span class="st">"test.csv"</span>)</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># reading in data</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>train_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> train_file_path) <span class="sc">|&gt;</span> </span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># raw training data</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>train_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> train_file_path) <span class="sc">|&gt;</span> </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 1,454
 Columns: 19
@@ -324,9 +334,10 @@ $ salinity1         &lt;dbl&gt; 34.1980, 34.0740, 33.5370, 34.0480, 34.1170, 33.
 $ temperature_deg_c &lt;dbl&gt; 7.82, 7.15, 11.68, 8.36, 7.57, 13.06, 6.36, 19.28, 7…
 $ dic               &lt;dbl&gt; 2270.170, 2254.100, 2111.040, 2223.410, 2252.620, 20…</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>test_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> test_file_path) <span class="sc">|&gt;</span> </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># raw testing data</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>test_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> test_file_path) <span class="sc">|&gt;</span> </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 485
 Columns: 17
@@ -362,7 +373,7 @@ $ temperature_deg_c &lt;dbl&gt; 9.52, 9.85, 6.65, 19.21, 10.66, 12.99, 10.30, 9.
 [13] "po4u_m"            "si_o3u_m"          "salinity1"        
 [16] "temperature_deg_c"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># different columns</span></span>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># looking for different columns between the training and testing data</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>unique_cols_df1 <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(colnames_df1, common_cols)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>unique_cols_df1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -375,16 +386,17 @@ $ temperature_deg_c &lt;dbl&gt; 9.52, 9.85, 6.65, 19.21, 10.66, 12.99, 10.30, 9.
 </div>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># adjusting training data per column naming differences</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>train_data <span class="ot">&lt;-</span> train_raw <span class="sc">|&gt;</span> </span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>x13) <span class="sc">|&gt;</span> <span class="co"># all NULL</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">ta1 =</span> ta1_x) <span class="co"># to match the test_raw naming</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>x13) <span class="sc">|&gt;</span> <span class="co"># removing since all NULL</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">ta1 =</span> ta1_x) <span class="co"># changing the name to match the test_raw naming</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="data-exploration" class="level3">
-<h3 class="anchored" data-anchor-id="data-exploration">Data Exploration</h3>
+<section id="data-exploration-for-machine-learning-algorithm-selection" class="level3">
+<h3 class="anchored" data-anchor-id="data-exploration-for-machine-learning-algorithm-selection">Data Exploration for Machine Learning Algorithm Selection</h3>
+<p>Below I create a full data set with both the training and testing data. I then explore data distributions for each of the features since this will inform the machine learning algorithm I select for ocean acidification prediction.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># adding all the data together to plot data distributions for variables to check for variance / outliers to inform which ML algorithm to use</span></span>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># adding all the data together to plot data distributions for each variable. This is to check variance and outliers to inform which ML algorithm to use</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>full_data <span class="ot">&lt;-</span> train_data <span class="sc">|&gt;</span> </span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>dic) <span class="sc">|&gt;</span> </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>dic) <span class="sc">|&gt;</span> <span class="co"># removing the dic variable we're predicting since the test data doesn't have this variable and i don't want to look at the data distribution in case leaving out the test data introduces bias</span></span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rbind</span>(test_raw)</span>
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co"># histograms to explore data distributions and look at variance/outliers</span></span>
@@ -404,9 +416,8 @@ $ temperature_deg_c &lt;dbl&gt; 9.52, 9.85, 6.65, 19.21, 10.66, 12.99, 10.30, 9.
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-3-2.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># potential outliers here:</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> full_data, <span class="fu">aes</span>(<span class="at">x =</span> nh3u_m)) <span class="sc">+</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> full_data, <span class="fu">aes</span>(<span class="at">x =</span> nh3u_m)) <span class="sc">+</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="co"># potential outliers here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 </div>
@@ -421,9 +432,8 @@ $ temperature_deg_c &lt;dbl&gt; 9.52, 9.85, 6.65, 19.21, 10.66, 12.99, 10.30, 9.
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-3-4.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># potential outliers here:</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> full_data, <span class="fu">aes</span>(<span class="at">x =</span> r_depth)) <span class="sc">+</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> full_data, <span class="fu">aes</span>(<span class="at">x =</span> r_depth)) <span class="sc">+</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="co"># potential outliers here:</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 </div>
@@ -438,18 +448,16 @@ $ temperature_deg_c &lt;dbl&gt; 9.52, 9.85, 6.65, 19.21, 10.66, 12.99, 10.30, 9.
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-3-6.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># potential outliers here:</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> full_data, <span class="fu">aes</span>(<span class="at">x =</span> r_dynht)) <span class="sc">+</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> full_data, <span class="fu">aes</span>(<span class="at">x =</span> r_dynht)) <span class="sc">+</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="co"># potential outliers here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 </div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-3-7.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># potential outliers here:</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> full_data, <span class="fu">aes</span>(<span class="at">x =</span> r_nuts)) <span class="sc">+</span></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> full_data, <span class="fu">aes</span>(<span class="at">x =</span> r_nuts)) <span class="sc">+</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="co"># potential outliers here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 </div>
@@ -460,13 +468,14 @@ $ temperature_deg_c &lt;dbl&gt; 9.52, 9.85, 6.65, 19.21, 10.66, 12.99, 10.30, 9.
 </section>
 <section id="xgboost-model" class="level3">
 <h3 class="anchored" data-anchor-id="xgboost-model">XGBoost Model</h3>
+<p>After plotting the data distributions, I see a lot of outliers. I also know that I can’t use a classification algorithm since my prediction variable is continuous. I choose to build an extreme gradient boosted treet (XGBoost) machine learning algorithm to build my ocean acidification prediction model. I use this algorithm since gradient boosted models, if properly tuned, can be the most flexible and accurate predictive models. I choose an extreme gradient boosted model since it can handle outliers well and has many hyperparameters that reduce overfitting.</p>
 <section id="recipe" class="level4">
 <h4 class="anchored" data-anchor-id="recipe">Recipe</h4>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># using the xgboost model since this is a powerful ML algorithm that can handle outliers. Code is adapted from: https://bradleyboehmke.github.io/HOML/gbm.html</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># recipe</span></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>xgb_prep <span class="ot">&lt;-</span> <span class="fu">recipe</span>(dic <span class="sc">~</span> ., <span class="at">data =</span> train_data) <span class="sc">%&gt;%</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>xgb_prep <span class="ot">&lt;-</span> <span class="fu">recipe</span>(dic <span class="sc">~</span> ., <span class="at">data =</span> train_data) <span class="sc">%&gt;%</span> <span class="co"># using all features for predicting dic (ocean acidification)</span></span>
 <span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prep</span>(<span class="at">training =</span> train_data, <span class="at">retain =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">juice</span>()</span>
 <span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a></span>
@@ -536,7 +545,7 @@ $ temperature_deg_c &lt;dbl&gt; 9.52, 9.85, 6.65, 19.21, 10.66, 12.99, 10.30, 9.
 <span id="cb30-56"><a href="#cb30-56" aria-hidden="true" tabindex="-1"></a>best_l <span class="ot">&lt;-</span> rmse_hp_results<span class="sc">$</span>lambda[<span class="dv">1</span>]</span>
 <span id="cb30-57"><a href="#cb30-57" aria-hidden="true" tabindex="-1"></a>best_a <span class="ot">&lt;-</span> rmse_hp_results<span class="sc">$</span>alpha[<span class="dv">1</span>]</span>
 <span id="cb30-58"><a href="#cb30-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-59"><a href="#cb30-59" aria-hidden="true" tabindex="-1"></a><span class="co"># beep when process is done</span></span>
+<span id="cb30-59"><a href="#cb30-59" aria-hidden="true" tabindex="-1"></a><span class="co"># beep when process is done since this process can take hours</span></span>
 <span id="cb30-60"><a href="#cb30-60" aria-hidden="true" tabindex="-1"></a><span class="fu">beep</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
@@ -566,18 +575,19 @@ $ temperature_deg_c &lt;dbl&gt; 9.52, 9.85, 6.65, 19.21, 10.66, 12.99, 10.30, 9.
 <span id="cb31-21"><a href="#cb31-21" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="predicting-the-test-data-set-dic" class="level4">
-<h4 class="anchored" data-anchor-id="predicting-the-test-data-set-dic">Predicting the Test Data Set DIC</h4>
+<section id="predicting-the-test-data-set-ocean-acidification-for-competition-assessment" class="level4">
+<h4 class="anchored" data-anchor-id="predicting-the-test-data-set-ocean-acidification-for-competition-assessment">Predicting the Test Data Set Ocean Acidification for Competition Assessment</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># predict the test data set</span></span>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># predict on the test data set</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>X_test <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(test_raw)</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>y_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(xgb.fit.final, <span class="at">newdata =</span> X_test)</span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>test_data_with_pred <span class="ot">&lt;-</span> <span class="fu">cbind</span>(test_raw, <span class="at">DIC =</span> y_pred) <span class="sc">|&gt;</span> </span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(id, DIC) <span class="co"># these are the only columns needed for kaggle competition</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>test_data_with_pred <span class="ot">&lt;-</span> <span class="fu">cbind</span>(test_raw, <span class="at">DIC =</span> y_pred) <span class="sc">|&gt;</span> </span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(id, DIC) <span class="co"># these are the only columns needed for kaggle competition</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="writing-the-final-file-to-a-csv" class="level4">
-<h4 class="anchored" data-anchor-id="writing-the-final-file-to-a-csv">Writing the Final File to a CSV</h4>
+<section id="writing-the-final-file-to-a-csv-for-competition-assessment" class="level4">
+<h4 class="anchored" data-anchor-id="writing-the-final-file-to-a-csv-for-competition-assessment">Writing the Final File to a CSV for Competition Assessment</h4>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># prompt the user to choose their own file name to write to a csv</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>file_name <span class="ot">&lt;-</span> <span class="fu">file.choose</span>(<span class="at">new =</span> <span class="cn">TRUE</span>)</span>
@@ -585,6 +595,11 @@ $ temperature_deg_c &lt;dbl&gt; 9.52, 9.85, 6.65, 19.21, 10.66, 12.99, 10.30, 9.
 <span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="co"># write test data predictions to a file</span></span>
 <span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(test_data_with_pred, <span class="at">file =</span> file_name, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+<section id="final-thoughts" class="level4">
+<h4 class="anchored" data-anchor-id="final-thoughts">Final Thoughts</h4>
+<p>Before the Kaggle Competition closed, each “test data” submission (aka each submission of ocean acidification predictions) were automatically assessed against the <em>real</em> ocean acidification values. Each submission was then given a root mean squared error (RMSE) score based on performance, and everyone could see on the leaderboard how their model performance stacked up compared to others’ model performance. I noticed that many people submitted many times, re-training and fine tuning their models to get better performance.</p>
+<p>However, the RMSE score was calculated only using 70% of the submitted data. This meant that the other 30% of the data were left out of RMSE performance metrics prior to the competition end date. As a result, every time a classmate re-trained a model to obtain better performance, they were essentially over fitting to that 70% of the training data. My hunch is that my model won because the 30% of data withheld were not representative of the patterns found in the rest of the data, and I made sure to not introduce bias by re-training and re-tuning my model to serve that 70%.</p>
 
 
 
@@ -611,15 +626,15 @@ $ temperature_deg_c &lt;dbl&gt; 9.52, 9.85, 6.65, 19.21, 10.66, 12.99, 10.30, 9.
 </section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{cutler2023,
   author = {Victoria Cutler},
   editor = {},
-  title = {Kaggle {Competition} {Winning} {Code:} {Predicting} {Ocean}
-    {Acidification}},
+  title = {Predicting {Ocean} {Acidification} for {Ecosystem}
+    {Management}},
   date = {2023-03-22},
   url = {https://victoriacutler.github.io/posts/predicting-ocean-acidification/},
   langid = {en}
 }
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-cutler2023" class="csl-entry quarto-appendix-citeas" role="doc-biblioentry">
-Victoria Cutler. 2023. <span>“Kaggle Competition Winning Code:
-Predicting Ocean Acidification.”</span> March 22, 2023. <a href="https://victoriacutler.github.io/posts/predicting-ocean-acidification/">https://victoriacutler.github.io/posts/predicting-ocean-acidification/</a>.
+Victoria Cutler. 2023. <span>“Predicting Ocean Acidification for
+Ecosystem Management.”</span> March 22, 2023. <a href="https://victoriacutler.github.io/posts/predicting-ocean-acidification/">https://victoriacutler.github.io/posts/predicting-ocean-acidification/</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
