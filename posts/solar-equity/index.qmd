@@ -1,6 +1,6 @@
 ---
 title: "Is Rooftop Solar Equitable?"
-description: "Who benefits from solar and who absorbs the drawbacks?"
+description: "Who benefits and who doesn't?"
 author:
   - name: Victoria Cutler
     url: https://victoriacutler.github.io # can also add orchid id under here
@@ -9,7 +9,7 @@ author:
 date: 2022-12-04
 categories: [ROOFTOP SOLAR, EQUITY, STATISTICS, R]
 citation:
-  url: https://victoriacutler.github.io/posts/solar-equity/
+  url: https://victoriacutler.github.io/postxs/solar-equity/
 bibliography: references.bib
 format:
   html:

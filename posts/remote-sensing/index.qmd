@@ -1,6 +1,6 @@
 ---
 title: "Remote Sensing for Environmental Issues"
-description: "Finding meaningful environmental information with both true- and false- colored satellite imagery."
+description: "Using both true- and false- colored satellite imagery."
 author:
   - name: Victoria Cutler
     url: https://victoriacutler.github.io # can also add orchid id under here
