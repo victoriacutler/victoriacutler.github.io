@@ -39,5 +39,6 @@ format:
       - red_theme.scss
     # css: styles.css
     mainfont: Roboto
+    #mainfont: Sharp Grotesk
     toc: true
 
