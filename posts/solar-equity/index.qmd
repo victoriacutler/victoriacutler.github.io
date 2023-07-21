@@ -4,7 +4,7 @@ description: "Who benefits and who doesn't?"
 author:
   - name: Victoria Cutler
     url: https://victoriacutler.github.io # can also add orchid id under here
-    affiliation: MEDS 
+    affiliation: Master of Environmental Data Science at The Bren School (UCSB) 
     affiliation-url: https://ucsb-meds.github.io
 date: 2022-12-04
 categories: [ROOFTOP SOLAR, EQUITY, STATISTICS, R]

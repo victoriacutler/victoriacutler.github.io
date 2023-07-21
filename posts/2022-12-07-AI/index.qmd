@@ -4,7 +4,7 @@ description: "How can we construct AI without unintended consequences?"
 author:
   - name: Victoria Cutler
     url: https://victoriacutler.github.io # can also add orchid id under here
-    affiliation: MEDS 
+    affiliation: Master of Environmental Data Science at The Bren School (UCSB) 
     affiliation-url: https://ucsb-meds.github.io
 date: 2022-12-07
 categories: [ETHICS, AI, OPEN SCIENCE]

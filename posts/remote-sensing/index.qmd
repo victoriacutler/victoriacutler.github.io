@@ -4,7 +4,7 @@ description: "Using both true- and false- colored satellite imagery."
 author:
   - name: Victoria Cutler
     url: https://victoriacutler.github.io # can also add orchid id under here
-    affiliation: MEDS 
+    affiliation: Master of Environmental Data Science at The Bren School (UCSB) 
     affiliation-url: https://ucsb-meds.github.io
 date: 2023-07-09
 categories: [PYTHON, REMOTE SENSING, VEGETATIVE HEALTH, NDVI, DEFORESTATION, LAND COVER CHANGE, GOOGLE EARTH ENGINE, LANDSAT]
