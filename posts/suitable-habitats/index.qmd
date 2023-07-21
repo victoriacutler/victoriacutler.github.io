@@ -7,7 +7,7 @@ author:
     affiliation: MEDS 
     affiliation-url: https://ucsb-meds.github.io
 date: 2023-07-20
-categories: [GEOSPATIAL DATA ANALYSIS, MAPPING, RASTERS, SHAPEFILES, RECLASSIFYING, MASKING]
+categories: [GEOSPATIAL DATA ANALYSIS, MAPPING, RASTERS, SHAPEFILES, RECLASSIFYING, MASKING, R, REMOTE SENSING]
 citation:
   url: https://victoriacutler.github.io/posts/suitable-habitats/
 bibliography: references.bib
