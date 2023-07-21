@@ -15,7 +15,7 @@ format:
   html:
     code-fold: false
     code-summary: "code dropdown"
-image: "preview-image.png"
+image: "ocean-acidification-draft.jpeg"
 draft: false # "true" will mean this is a draft post so it wont show up on my site
 ---
 

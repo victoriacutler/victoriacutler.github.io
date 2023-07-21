@@ -25,7 +25,7 @@
     "href": "posts/predicting-ocean-acidification/index.html",
     "title": "Predicting Ocean Acidification for Ecosystem Management",
     "section": "",
-    "text": "Our oceans absorb about 30% of the CO2 in our atmosphere. So, as CO2 emissions increase, CO2 in our oceans does, as well. This may not sound like a problem, but CO2 quickly breaks down and creates acid that disintegrates things like sea shells and coral reefs that fish, shellfish, and ultimately, humans, depend on. (“What Is Ocean Acidification?” 2023) More than 3 billion people around the world rely on food from our oceans(“A Healthy Ocean Depends on Sustainably Managed Fisheries” 2021), and ocean acidification poses a huge risk to the availability of the food."
+    "text": "Ocean acidification, driven primarily by human-induced carbon emissions, already poses a huge problem for our oceans, economy, and well being. For proper ecosystem management, is important to understand which areas of the ocean are at higher risk. This workbook uses machine learning techniques to accurately predict ocean acidification to aid in management."
   },
   {
     "objectID": "posts/predicting-ocean-acidification/index.html#kaggle-competition-background",
@@ -89,5 +89,12 @@
     "title": "blog & portfolio",
     "section": "",
     "text": "GEOSPATIAL DATA ANALYSIS\n\n\nMAPPING\n\n\nRASTERS\n\n\nSHAPEFILES\n\n\nRECLASSIFYING\n\n\nMASKING\n\n\nR\n\n\nREMOTE SENSING\n\n\n\nCleaning and reclassifying geospatial vector and raster data to pinpoint optimal zones.\n\n\n\nVictoria Cutler\n\n\nJul 20, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nPYTHON\n\n\nREMOTE SENSING\n\n\nVEGETATIVE HEALTH\n\n\nNDVI\n\n\nDEFORESTATION\n\n\nLAND COVER CHANGE\n\n\nGOOGLE EARTH ENGINE\n\n\nLANDSAT\n\n\n\nUsing both true- and false- colored satellite imagery.\n\n\n\nVictoria Cutler\n\n\nJul 9, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nCAL COFI\n\n\nOCEAN ACIDIFICATION\n\n\nMACHINE LEARNING\n\n\nEXTREME GRADIENT BOOSTING\n\n\nR\n\n\n\nA journey through my code to the winning RMSE score.\n\n\n\nVictoria Cutler\n\n\nMar 22, 2023\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nETHICS\n\n\nAI\n\n\nOPEN SCIENCE\n\n\n\nHow can we construct AI without unintended consequences?\n\n\n\nVictoria Cutler\n\n\nDec 7, 2022\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nROOFTOP SOLAR\n\n\nEQUITY\n\n\nSTATISTICS\n\n\nR\n\n\n\nWho benefits and who doesn’t?\n\n\n\nVictoria Cutler\n\n\nDec 4, 2022\n\n\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/predicting-ocean-acidification/index.html#what-is-ocean-acidification",
+    "href": "posts/predicting-ocean-acidification/index.html#what-is-ocean-acidification",
+    "title": "Predicting Ocean Acidification for Ecosystem Management",
+    "section": "What is Ocean Acidification?",
+    "text": "What is Ocean Acidification?\nOur oceans absorb about 30% of the CO2 in our atmosphere. So, as CO2 emissions increase, CO2 in our oceans does, as well. This may not sound like a problem, but CO2 quickly breaks down and creates acid that disintegrates things like sea shells and coral reefs that fish, shellfish, and ultimately, humans, depend on. (“What Is Ocean Acidification?” 2023) More than 3 billion people around the world rely on food from our oceans(“A Healthy Ocean Depends on Sustainably Managed Fisheries” 2021), and ocean acidification poses a huge risk to the availability of the food."
   }
 ]
