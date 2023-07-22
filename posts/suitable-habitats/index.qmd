@@ -1,6 +1,6 @@
 ---
 title: "Finding Suitable Locations for Marine Aquaculture"
-description: "Cleaning and reclassifying geospatial vector and raster data to pinpoint optimal zones."
+description: "Cleaning and reclassifying geospatial vector and raster data to pinpoint optimal locations."
 author:
   - name: Victoria Cutler
     url: https://victoriacutler.github.io # can also add orchid id under here
@@ -17,33 +17,35 @@ format:
 draft: false # "true" will mean this is a draft post so it wont show up on my site
 ---
 
-## Why is Marine Aquaculture Important?
+## Finding Suitable Locations for Marine Aquaculture
 
-Marine aquaculture holds tremendous promise in addressing the global demand for sustainable protein sources, surpassing conventional land-based meat production. Recent research conducted by Gentry et al. has shed light on the vast potential of marine aquaculture worldwide, considering various crucial factors like ship traffic, dissolved oxygen, and bottom depth. [@gentry2017]
+Marine aquaculture holds tremendous promise in addressing the global demand for sustainable protein sources, surpassing conventional land-based meat production. Recent research conducted by Gentry et al. has shed light on the vast potential of marine aquaculture worldwide, highlighting that all current wild-capture fisheries could be replaced by using less than 0.015% of the global ocean area for acquaculture [@gentry2017].
 
-## Finding Suitable Locations for Aquaculture
+In this post, I embark on a journey to identify the most suitable locations along the west coast of the US for cultivating various marine life. I start by looking at habitat suitable for oysters, and end with a reproducible and reusable workflow workable for any species. My objective is to pinpoint various exclusive economic zones (EEZ)[^1] that have ideal conditions for marine aquaculture given each desired species ideal sea surface temperature and sea depth ranges.
 
-In this post, we embark on a journey to identify the most suitable Exclusive Economic Zones (EEZ) along the West Coast of the US for cultivating several oyster species. Our objective is to pinpoint areas where the ideal conditions for oyster growth, such as sea surface temperature and depth, converge, setting the stage for thriving oyster aquaculture ventures.
+[^1]: Exclusive economic zones represent areas or "zones" of ocean that are assigned to a specific country for exclusive economic purposes such as fishing.
+
+**A note on study limitations:** According to Gentry et al., finding suitable marine aquaculture sites also depends on dissolved oxygen levels, and human-induced constraints such as protected areas, shipping lanes, and oil rigs. According to the study, the lethal limit of dissolved oxygen was not found to be a limiting factor for bivalves (mollusks such as oysters, clams, mussles, an scallops) and dissolved oxygen data is therefore left out of these analyses for simplicity. Human-induced constraints were also left out of this study but should be included for further analysis [@gentry2017].
 
 ## Metadata
 
 #### Sea Surface Temperature
 
-We will use average annual sea surface temperature (SST) from the years 2008 to 2012 to characterize the average sea surface temperature within the region. The data we are working with was originally generated from [NOAA's 5km Daily Global Satellite Sea Surface Temperature Anomaly v3.1](https://coralreefwatch.noaa.gov/product/5km/index_5km_ssta.php).
+I use average annual sea surface temperature (SST) from the years 2008 to 2012 to characterize the average sea surface temperature within the region. These data were originally collected from [NOAA's 5km Daily Global Satellite Sea Surface Temperature Anomaly v3.1](https://coralreefwatch.noaa.gov/product/5km/index_5km_ssta.php).
 
 #### Bathymetry
 
-To characterize the depth of the ocean we will use the [General Bathymetric Chart of the Oceans (GEBCO)](https://www.gebco.net/data_and_products/gridded_bathymetry_data/#area).[^1]
+To characterize the depth of the ocean I use the [General Bathymetric Chart of the Oceans (GEBCO)](https://www.gebco.net/data_and_products/gridded_bathymetry_data/#area).[^2]
 
-[^1]: GEBCO Compilation Group (2022) GEBCO_2022 Grid (<doi:10.5285/e0f0bb80-ab44-2739-e053-6c86abc0289c>).
+[^2]: GEBCO Compilation Group (2022) GEBCO_2022 Grid (<doi:10.5285/e0f0bb80-ab44-2739-e053-6c86abc0289c>).
 
 #### Exclusive Economic Zones
 
-We will be designating maritime boundaries using Exclusive Economic Zones off of the west coast of US from [Marineregions.org](https://www.marineregions.org/eez.php).
+I use exclusive economic zonal boundaries from [Marineregions.org](https://www.marineregions.org/eez.php).
 
 ## The Code
 
-### Loading the Libraries
+#### Loading the Libraries
 
 ```{r warning = FALSE, message = FALSE}
 # loading necessary libraries
@@ -57,11 +59,11 @@ library(rpart.plot)
 library(tmap)
 ```
 
-### Loading and Cleaning Up the Data
+#### Loading and Cleaning Up the Data
 
 Here I read in all the spatial data: west coast zone data, yearly sea surface temperature data, and approximate depth data. I then clean the data by (1) checking and aligning coordinate reference systems, map projections, spatial extent, and spatial resolutions (so that our data are correctly aligned in space) and (2) converting data types and units (for dataset compatibility and ease of future calculations).
 
-**Notes on Methodology:** You'll see that I use the nearest neighbors approach to resample the depth data to match the resolution of the sea surface temperature data, which is of lower resolution. Downscaling like this is a common practice with geospatial datasets since the nearest neighbors approach preserves the original data by assigning the closest pixel in the higher resolution dataset (in this case the closest depth data point) to the newly created lower resolution pixel. I chose this method primarily due to its computational efficiency. Since depth data is continuous, for more accurate analysis something like bilinear or cubic interpolation may be better here.
+You'll see that I use the nearest neighbors approach to resample the depth data to match the resolution of the sea surface temperature data, which is of lower resolution. Downsampling like this is a common practice with geospatial datasets since the nearest neighbors approach preserves the original data by assigning the closest pixel in the higher resolution dataset (in this case the closest depth data point) to the newly created lower resolution pixel. I chose this method primarily due to its computational efficiency. Since depth data is continuous, for more accurate analysis something like bilinear or cubic interpolation may be better here.
 
 ```{r warning = FALSE, message = FALSE}
 # set working directory to here
@@ -111,11 +113,11 @@ stack_test <- rast(c(average_sst_degC, depth_newres))
 stack_test # stackable
 ```
 
-### Using Reclassification Matrices to Assess Oyster Ecosystem Suitability
+#### Using Reclassification Matrices to Assess Oyster Ecosystem Suitability
 
 In this process, I conduct a reclassification of both the sea surface temperature raster and depth raster. Areas with suitable depth or temperature for oyster aquaculture are assigned a value of '1', while unsuitable areas are marked as 'NA'. By subsequently employing the `lapply()` function, I perform a multiplication operation on the reclassified rasters. The outcome is a final raster presenting a clear distinction between '1s' indicating suitable habitat and 'NAs' representing areas unsuitable for oyster cultivation, providing a comprehensive depiction of overall suitability.
 
-```{r}
+```{r warning = FALSE, message = FALSE}
 # reclassifying the SST raster for oyster suitability (11-30°C)
 
   # first creating a reclassification matrix
@@ -144,19 +146,19 @@ mult_fun = function(rast1, rast2){
 depth_and_stt_suitable <- lapp(c(depth_suitable, sst_suitable), fun = mult_fun)
 ```
 
-### Scaling to Zones of Interest (Ecological Economic Zones)
+#### Scaling to Locations of Interest (Ecological Economic Zones)
 
-```{r}
-
+```{r warning = FALSE, message = FALSE}
 # data exploration - are these rasters of the same extent/crs etc? yes!
 wc_regions
 depth_and_stt_suitable
 
   # first, make wc_regions into a raster
 wc_regions_simp <- wc_regions |> 
-  select("rgn")
+  select("rgn") |> 
+  rename(Region = rgn)
 
-wc_regions_rast <- rasterize(x = wc_regions_simp, y = depth_and_stt_suitable, field = "rgn")
+wc_regions_rast <- rasterize(x = wc_regions_simp, y = depth_and_stt_suitable, field = "Region")
 
 # finding the suitable cells within each region
   # first mask the region raster with the suitable cells (since not suitable cells are NA, our region raster will only have values where suitable)
@@ -179,20 +181,20 @@ total_area_byregion <- zonal(cellSize(wc_regions_rast, unit="m"), wc_regions_ras
 total_area_byregion 
 
 # find the percent of suitable area per area per region
-percent_area_df <- inner_join(total_area_byregion, suitable_area_byregion, by = "rgn") |> mutate(percent_suitable = (suitable_area_km2/total_area_km2) * 100)
+percent_area_df <- inner_join(total_area_byregion, suitable_area_byregion, by = "Region") |> mutate(percent_suitable = (suitable_area_km2/total_area_km2) * 100)
 
 # source code: https://stackoverflow.com/questions/68979884/how-to-loop-through-a-dataframe-and-get-value-of-corresponding-column
 for(i in 1:dim(percent_area_df)[1]) {
-  writeLines((paste0(percent_area_df$rgn[i], " has an area suitable for oysters of " , round(percent_area_df$suitable_area_km2[i], 2), "km2 which amounts to an area that is ", round(percent_area_df$percent_suitable[i],2), "% suitable for oysters.","\n")))
+  writeLines((paste0(percent_area_df$Region[i], " has an area suitable for oysters of " , round(percent_area_df$suitable_area_km2[i], 2), "km2 which amounts to an area that is ", round(percent_area_df$percent_suitable[i],2), "% suitable for oysters.","\n")))
 }
 
   # test: look at percentages using the given areas to see if theyre similar:
-#percent_area_df_originalareas <- merge(wc_regions, suitable_area_byregion, by = "rgn") |> mutate(percent_suitable = (suitable_area_km2/area_km2) * 100)
+#percent_area_df_originalareas <- merge(wc_regions, suitable_area_byregion, by = "Region") |> mutate(percent_suitable = (suitable_area_km2/area_km2) * 100)
 ```
 
-### Visualizing Suitable Ecological Economic Zones
+#### Visualizing Suitable Ecological Economic Zones
 
-```{r}
+```{r warning = FALSE, message = FALSE}
 # first joining the the area_df back to the region sf object for plotting
 region_stats_join <- merge(wc_regions, percent_area_df)
 
@@ -201,8 +203,8 @@ tmap_mode("view")
 
 # total suitable area by region
   # create legend title
-#legend_title_area = expression("Suitable Area for Oysters (km"^2*")")
-legend_title_area = expression("Suitable Area for Oysters (km^2)")
+legend_title_area = expression("Suitable Area for the <br> Oyster Species (km<sup>2</sup>)")
+#legend_title_area = expression("Suitable Area for Oysters (km^2)")
 area_suitable_map <- tm_shape(region_stats_join) +
   tm_fill(col = "suitable_area_km2",
           title = legend_title_area,
@@ -212,26 +214,26 @@ area_suitable_map <- tm_shape(region_stats_join) +
   tm_legend(legend.outside = TRUE) +
   #tm_layout(main.title = "West Coast Regions Suitable for Oysters",
             #main.title.size = 1)  +
-  tm_text("rgn", size = 0.3) +
+  tm_text("Region", size = 0.5) +
   tm_basemap(server = "OpenTopoMap")
 
 # percent suitable area by region
 percent_suitable_map <- tm_shape(region_stats_join) +
   tm_fill(col = "percent_suitable",
-          title = "Percent of Region Suitable for Oysters",
+          title = "Percent of Region Suitable <br> for the Oyster Species",
           style = "pretty",
           palette = "Blues") +
   tm_borders() +
   tm_legend(legend.outside = TRUE) +
  # tm_layout(main.title = "Percent of West Coast Region Suitable for Oysters",
            # main.title.size = 1) +
-  tm_text("rgn", size = 0.3) +
+  tm_text("Region", size = 0.5) +
   tm_basemap(server = "OpenTopoMap")
 
 tmap_arrange(area_suitable_map, percent_suitable_map)
 ```
 
-### Creating a Function to Broaden this Workflow
+#### Creating a Function to Broaden this Workflow
 
 This sort of analysis can be applicable for many different applications. Not only can this analysis be used to assess aquaculture suitability for other species, not just the oyster, but it can also be used to assess critical habitat needs for any key marine life that depends on certain sea surface temperature and ocean depth.
 
@@ -239,7 +241,7 @@ Here I turn my analysis into a function that takes in the marine species of inte
 
 Below I test my function using data from [SeaLifeBase](https://www.sealifebase.ca/search.php) to find suitable habitat for the Bottlenose Dolphin. In reality, however, geolocating Bottlenose Dolphin habitat may depend on additional key factors.
 
-```{r}
+```{r warning = FALSE, message = FALSE}
 # creating a function that takes in depth ranges, temperature ranges, and species name
 suitability_map_fun = function(shallowest_depth, deepest_depth, min_temp, max_temp, species_name){
   
@@ -280,7 +282,7 @@ region_stats_join <- merge(wc_regions, percent_area_df)
 
 tmap_mode("view")
 
-legend_title_area = paste0("Suitable Area for the ", species_name, " Species (km^2)")
+legend_title_area = paste0("Suitable Area for the <br>", species_name, " Species (km<sup>2</sup>)")
 area_suitable_map <- tm_shape(region_stats_join) +
   tm_fill(col = "suitable_area_km2",
           title = legend_title_area,
@@ -288,10 +290,10 @@ area_suitable_map <- tm_shape(region_stats_join) +
           palette = "Blues") +
   tm_borders() +
   tm_legend(legend.outside = TRUE) +
-  tm_text("rgn", size = 0.3) +
+  tm_text("rgn", size = 0.5) +
   tm_basemap(server = "OpenTopoMap")
 
-legend_title_percent = paste0("Percent of Region Suitable for the ", species_name, " Species")
+legend_title_percent = paste0("Percent of Region Suitable <br> for the ", species_name, " Species")
 percent_suitable_map <- tm_shape(region_stats_join) +
   tm_fill(col = "percent_suitable",
           title = legend_title_percent,
@@ -299,7 +301,7 @@ percent_suitable_map <- tm_shape(region_stats_join) +
           palette = "Blues") +
   tm_borders() +
   tm_legend(legend.outside = TRUE) +
-  tm_text("rgn", size = 0.3) +
+  tm_text("rgn", size = 0.5) +
   tm_basemap(server = "OpenTopoMap")
 
 tmap_arrange(area_suitable_map, percent_suitable_map)
