@@ -11,6 +11,7 @@ categories: [GEOSPATIAL DATA ANALYSIS, MAPPING, RASTERS, SHAPEFILES, RECLASSIFYI
 citation:
   url: https://victoriacutler.github.io/posts/suitable-habitats/
 bibliography: references.bib
+image: suitable-habitat-oyster.png
 format:
   html:
     code-fold: false
@@ -67,7 +68,7 @@ You'll see that I use the nearest neighbors approach to resample the depth data 
 
 ```{r warning = FALSE, message = FALSE}
 # set working directory to here
-setwd(here())
+#setwd(here())
 
 # read in the shapefile of the maritime boundaries of the west coast region
 wc_regions <- st_read(here("posts", "suitable-habitats", "data", "wc_regions_clean.shp"))
@@ -150,13 +151,12 @@ depth_and_stt_suitable <- lapp(c(depth_suitable, sst_suitable), fun = mult_fun)
 
 ```{r warning = FALSE, message = FALSE}
 # data exploration - are these rasters of the same extent/crs etc? yes!
-wc_regions
+wc_regions <- wc_regions |> rename(Region = rgn)
 depth_and_stt_suitable
 
   # first, make wc_regions into a raster
 wc_regions_simp <- wc_regions |> 
-  select("rgn") |> 
-  rename(Region = rgn)
+  select("Region")
 
 wc_regions_rast <- rasterize(x = wc_regions_simp, y = depth_and_stt_suitable, field = "Region")
 
@@ -215,7 +215,7 @@ area_suitable_map <- tm_shape(region_stats_join) +
   #tm_layout(main.title = "West Coast Regions Suitable for Oysters",
             #main.title.size = 1)  +
   tm_text("Region", size = 0.5) +
-  tm_basemap(server = "OpenTopoMap")
+  tm_basemap("CartoDB.Positron") 
 
 # percent suitable area by region
 percent_suitable_map <- tm_shape(region_stats_join) +
@@ -228,7 +228,7 @@ percent_suitable_map <- tm_shape(region_stats_join) +
  # tm_layout(main.title = "Percent of West Coast Region Suitable for Oysters",
            # main.title.size = 1) +
   tm_text("Region", size = 0.5) +
-  tm_basemap(server = "OpenTopoMap")
+  tm_basemap("CartoDB.Positron")
 
 tmap_arrange(area_suitable_map, percent_suitable_map)
 ```
@@ -239,7 +239,7 @@ This sort of analysis can be applicable for many different applications. Not onl
 
 Here I turn my analysis into a function that takes in the marine species of interest, habitat temperature and depth ranges and returns maps of total suitable area and percent suitable area per exclusive economic zone.
 
-Below I test my function using data from [SeaLifeBase](https://www.sealifebase.ca/search.php) to find suitable habitat for the Bottlenose Dolphin. In reality, however, geolocating Bottlenose Dolphin habitat may depend on additional key factors.
+Below I test my function using data from [SeaLifeBase](https://www.sealifebase.ca/search.php) to find suitable habitat for the Giant Rock Scallop, usually found on the west coast of the USA.
 
 ```{r warning = FALSE, message = FALSE}
 # creating a function that takes in depth ranges, temperature ranges, and species name
@@ -263,8 +263,8 @@ depth_and_stt_suitable <- lapp(c(depth_suitable, sst_suitable), fun = mult_fun)
 
   # code sourced from the "Determine the most suitable EEZ" section
 wc_regions_simp <- wc_regions |> 
-  select("rgn")
-wc_regions_rast <- rasterize(x = wc_regions_simp, y = depth_and_stt_suitable, field = "rgn")
+  select("Region")
+wc_regions_rast <- rasterize(x = wc_regions_simp, y = depth_and_stt_suitable, field = "Region")
 wc_regions_mask <- mask(wc_regions_rast, depth_and_stt_suitable)
 
 suitable_area_byregion <- zonal(cellSize(wc_regions_mask, unit="m"), wc_regions_mask, fun = "sum") |> 
@@ -275,7 +275,7 @@ total_area_byregion <- zonal(cellSize(wc_regions_rast, unit="m"), wc_regions_ras
   mutate(area = area / (1000^2)) |> 
   rename(total_area_km2 = area)
 
-percent_area_df <- inner_join(total_area_byregion, suitable_area_byregion, by = "rgn") |> mutate(percent_suitable = (suitable_area_km2/total_area_km2) * 100)
+percent_area_df <- inner_join(total_area_byregion, suitable_area_byregion, by = "Region") |> mutate(percent_suitable = (suitable_area_km2/total_area_km2) * 100)
 
 # code sourced from the "Determine the most suitable EEZ" section
 region_stats_join <- merge(wc_regions, percent_area_df)
@@ -290,8 +290,8 @@ area_suitable_map <- tm_shape(region_stats_join) +
           palette = "Blues") +
   tm_borders() +
   tm_legend(legend.outside = TRUE) +
-  tm_text("rgn", size = 0.5) +
-  tm_basemap(server = "OpenTopoMap")
+  tm_text("Region", size = 0.5) +
+  tm_basemap("CartoDB.Positron") 
 
 legend_title_percent = paste0("Percent of Region Suitable <br> for the ", species_name, " Species")
 percent_suitable_map <- tm_shape(region_stats_join) +
@@ -301,14 +301,14 @@ percent_suitable_map <- tm_shape(region_stats_join) +
           palette = "Blues") +
   tm_borders() +
   tm_legend(legend.outside = TRUE) +
-  tm_text("rgn", size = 0.5) +
-  tm_basemap(server = "OpenTopoMap")
+  tm_text("Region", size = 0.5) +
+  tm_basemap("CartoDB.Positron") 
 
 tmap_arrange(area_suitable_map, percent_suitable_map)
 
 }
 
-# running the function for the bottlenose dolphin
-  # source: https://www.sealifebase.ca/summary/Tursiops-truncatus.html
-suitability_map_fun(shallowest_depth = 0, deepest_depth = 1316, min_temp = 6.4, max_temp = 28.9, species_name = "Dolphin")
+# running the function for the USA giant rock-scallop
+  # source: https://www.sealifebase.ca/summary/Crassadoma-gigantea.html
+suitability_map_fun(shallowest_depth = 0, deepest_depth = 80, min_temp = 0, max_temp = 22, species_name = "Giant Rock Scallop")
 ```
