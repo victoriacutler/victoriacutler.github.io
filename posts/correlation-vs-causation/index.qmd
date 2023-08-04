@@ -161,7 +161,7 @@ heteroskedastic error also show us that all of the housing and lot
 characteristics have causal effects statistically significant from 0,
 with a p value \> 0.0005
 
-## Final Thoughts on incinerator construction in North Andover.
+## Final Thoughts on Incinerator Construction in North Andover
 
 The key assumption underlying the causal interpretation of the DD
 estimator is the parallel trends assumption. In other words, we assume
