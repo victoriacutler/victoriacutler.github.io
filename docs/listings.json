@@ -2,6 +2,7 @@
   {
     "listing": "/posts.html",
     "items": [
+      "/posts/correlation-vs-causation/index.html",
       "/posts/suitable-habitats/index.html",
       "/posts/remote-sensing/index.html",
       "/posts/predicting-ocean-acidification/index.html",

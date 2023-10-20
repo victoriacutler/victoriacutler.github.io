@@ -1,6 +1,6 @@
 ---
 title: "Finding Suitable Locations for Marine Aquaculture"
-description: "Cleaning and reclassifying geospatial vector and raster data to pinpoint optimal locations."
+description: "Cleaning and reclassifying geospatial vector and raster data to find optimal regions."
 author:
   - name: Victoria Cutler
     url: https://victoriacutler.github.io # can also add orchid id under here
@@ -20,7 +20,7 @@ draft: false # "true" will mean this is a draft post so it wont show up on my si
 
 ## Finding Suitable Locations for Marine Aquaculture
 
-Marine aquaculture holds tremendous promise in addressing the global demand for sustainable protein sources, surpassing conventional land-based meat production. Recent research conducted by Gentry et al. has shed light on the vast potential of marine aquaculture worldwide, highlighting that all current wild-capture fisheries could be replaced by using less than 0.015% of the global ocean area for acquaculture [@gentry2017].
+Marine aquaculture holds tremendous promise in addressing the global demand for sustainable protein sources, surpassing conventional land-based meat production. Recent research conducted by Gentry et al. has shed light on the vast potential of marine aquaculture worldwide, highlighting that all current wild-capture fisheries could be replaced by using less than 0.015% of the global ocean area for aquaculture [@gentry2017].
 
 In this post, I embark on a journey to identify the most suitable locations along the west coast of the US for cultivating various marine life. I start by looking at habitat suitable for oysters, and end with a reproducible and reusable workflow workable for any species. My objective is to pinpoint various exclusive economic zones (EEZ)[^1] that have ideal conditions for marine aquaculture given each desired species ideal sea surface temperature and sea depth ranges.
 
