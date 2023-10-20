@@ -18,7 +18,7 @@ about:
 
 ### about me
 
-Hi 👋🏼 My name is Victoria. I recently completed the Bren School\'s Master of Environmental Data Science (MEDS) program at the University of California, Santa Barbara. I am passionate about problem solving with code and fully committed to addressing environmental issues. In my free time I love to go camping/backpacking, attend game nights, and find new restaurants. Please feel free to check out my resume and portfolio, and I hope to hear from you!
+Hi 👋🏼 My name is Victoria. I recently completed the Bren School's Master of Environmental Data Science (MEDS) program at the University of California, Santa Barbara. I am passionate about problem solving with code and fully committed to addressing environmental issues. In my free time I love to go camping/backpacking, attend game nights, and find new restaurants. Please feel free to check out my resume and portfolio, and I hope to hear from you!
 
 ### education
 
@@ -27,6 +27,10 @@ Master's in Environmental Data Science \| 2023 \| Bren School at UCSB
 Bachelor's in Environmental Science \| 2018 \| Colorado College
 
 ### experience
+
+EV Realty \| 2023 - Present
+
+-   Data Scientist
 
 Pacific Gas & Electric Company (PG&E) \| 2018 - 2022
 
